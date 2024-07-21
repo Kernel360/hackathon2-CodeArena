@@ -10,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;

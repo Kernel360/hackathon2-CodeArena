@@ -1,8 +1,6 @@
 package sample.codearea.config.db;
 
-import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import sample.codearea.entity.QuestionEntity;
 import sample.codearea.entity.UserEntity;
