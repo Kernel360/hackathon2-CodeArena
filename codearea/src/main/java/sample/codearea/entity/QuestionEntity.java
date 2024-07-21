@@ -26,7 +26,7 @@ import sample.codearea.common.TimeTrackableEntity;
 public class QuestionEntity extends TimeTrackableEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "questionId")
 	private Long id;
 
@@ -37,23 +37,21 @@ public class QuestionEntity extends TimeTrackableEntity {
 	@ManyToMany(mappedBy = "questionScraps")
 	private List<UserEntity> users = new ArrayList<>();
 
-	@Column(name = "title", nullable = false, columnDefinition = "VARCHAR(255)")
+	@Column(nullable = false, columnDefinition = "VARCHAR(255)")
 	private String title;
 
-	@Column(name = "content", nullable = false, columnDefinition = "TEXT")
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String content;
 
-	// TODO: 내가 작성한 글은 조회수를 증가시키지 않아야 합니다.
-	@Column(name = "views", nullable = false, columnDefinition = "INT")
+	@Column(nullable = false, columnDefinition = "INT")
 	@ColumnDefault("0")
 	private Integer views = 0;
 
-	// TODO: 좋아요/싫어요는 사용자당 1개만 가능합니다.
-	@Column(name = "likes", nullable = false, columnDefinition = "INT")
+	@Column(nullable = false, columnDefinition = "INT")
 	@ColumnDefault("0")
 	private Integer likes = 0;
 
-	@Column(name = "hates", nullable = false, columnDefinition = "INT")
+	@Column(nullable = false, columnDefinition = "INT")
 	@ColumnDefault("0")
 	private Integer hates = 0;
 

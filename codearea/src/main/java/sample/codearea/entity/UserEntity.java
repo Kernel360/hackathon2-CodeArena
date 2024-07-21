@@ -24,17 +24,17 @@ import sample.codearea.common.TimeTrackableEntity;
 public class UserEntity extends TimeTrackableEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "userId")
 	private Long id;
 
-	@Column(name = "email", nullable = false, unique = true, columnDefinition = "VARCHAR(50)")
+	@Column(nullable = false, unique = true, columnDefinition = "VARCHAR(50)")
 	private String email;
 
-	@Column(name = "nickname", nullable = false, unique = true, columnDefinition = "VARCHAR(50)")
+	@Column(nullable = false, unique = true, columnDefinition = "VARCHAR(50)")
 	private String nickname;
 
-	@Column(name = "password", nullable = false, columnDefinition = "VARCHAR(255)")
+	@Column(nullable = false, columnDefinition = "VARCHAR(255)")
 	private String password; // TODO: must be encrypted
 
 	// https://www.baeldung.com/jpa-many-to-many
