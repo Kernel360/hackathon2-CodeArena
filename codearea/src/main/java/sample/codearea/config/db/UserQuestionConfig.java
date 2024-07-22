@@ -4,9 +4,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import sample.codearea.entity.AnswerEntity;
+import sample.codearea.entity.CommentEntity;
 import sample.codearea.entity.QuestionEntity;
 import sample.codearea.entity.UserEntity;
 import sample.codearea.repository.AnswerRepository;
+import sample.codearea.repository.CommentRepository;
 import sample.codearea.repository.QuestionRepository;
 import sample.codearea.repository.UserRepository;
 
@@ -24,7 +26,8 @@ public class UserQuestionConfig {
 	CommandLineRunner commandLineRunner(
 		QuestionRepository questionRepository,
 		UserRepository userRepository,
-		AnswerRepository answerRepository
+		AnswerRepository answerRepository,
+		CommentRepository commentRepository
 	) {
 		return args -> {
 			// DB test
@@ -56,6 +59,15 @@ public class UserQuestionConfig {
 					.build();
 
 			answerRepository.save(answer);
+
+
+			CommentEntity comment = CommentEntity.builder()
+					.user(user1)
+					.answer(answer)
+					.content("comment test")
+					.build();
+
+			commentRepository.save(comment);
 		};
 	}
 
