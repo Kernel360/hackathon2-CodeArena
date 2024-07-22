@@ -1,14 +1,7 @@
 package sample.codearea.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
@@ -36,6 +29,12 @@ public class UserEntity extends TimeTrackableEntity {
 
 	@Column(nullable = false, columnDefinition = "VARCHAR(255)")
 	private String password; // TODO: must be encrypted
+
+	@OneToMany(mappedBy = "user")
+	private List<QuestionEntity> questions = new ArrayList<>();
+
+	@OneToMany(mappedBy = "user")
+	private List<AnswerEntity> answers = new ArrayList<>();
 
 	// https://www.baeldung.com/jpa-many-to-many
 	// 사용자 질문 투표 Entity는 위 링크 참고 바랍니다.
