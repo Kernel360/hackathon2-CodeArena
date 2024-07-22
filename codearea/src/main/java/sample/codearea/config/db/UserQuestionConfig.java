@@ -20,10 +20,11 @@ import sample.codearea.repository.UserRepository;
 public class UserQuestionConfig {
 
 	// DB 테스트용으로 작성하였습니다. (@Bean 주석 비활성화시 DB에 Insert 수행)
-	// @Bean
+	@Bean
 	CommandLineRunner commandLineRunner(
 		QuestionRepository questionRepository,
-		UserRepository userRepository
+		UserRepository userRepository,
+		AnswerRepository answerRepository
 	) {
 		return args -> {
 			// DB test
@@ -48,19 +49,14 @@ public class UserQuestionConfig {
 			user1.getQuestionScraps().add(question1);
 			// save를 해야만 테이블에 반영되는가...?
 			userRepository.save(user1);
-		};
-	}
 
-	@Bean
-	CommandLineRunner commandLineRunnerAnswer(
-			AnswerRepository answerRepository
-	) {
-		return args -> {
 			AnswerEntity answer = AnswerEntity.builder()
+					.user(user1)
 					.content("test")
 					.build();
 
 			answerRepository.save(answer);
 		};
 	}
+
 }
