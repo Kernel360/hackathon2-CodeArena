@@ -2,14 +2,8 @@ import { z } from "zod";
 import { API_URL } from "./API_URL";
 import { formSchema } from "@/components/login/LoginForm";
 
-export interface POST_SignUpResponseFormat {
-    // ...
-}
-
-type user_id = number;
-
 /*******************
- *    회원 가입
+ *    로그인
  *******************/
 export async function requestLogIn(
     formData: z.infer<typeof formSchema>
