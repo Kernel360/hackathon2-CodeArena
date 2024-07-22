@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sample.codearea.dto.AnswerRequestDto;
+import sample.codearea.dto.AnswerResponseDto;
 import sample.codearea.entity.AnswerEntity;
 import sample.codearea.service.AnswerService;
 
@@ -18,9 +19,8 @@ public class AnswerController {
     private final AnswerService answerService;
 
     @GetMapping
-    public List<AnswerEntity> list() {
-        List<AnswerEntity> answers = answerService.findAll();
-        return answers;
+    public List<AnswerResponseDto> list() {
+        return answerService.findAll();
     }
 
     @PostMapping
@@ -28,4 +28,6 @@ public class AnswerController {
 //        answerService.save(answerRequestDto);
         return null;
     }
+
+
 }
