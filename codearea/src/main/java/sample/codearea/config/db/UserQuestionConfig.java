@@ -4,11 +4,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import sample.codearea.entity.AnswerEntity;
-import sample.codearea.entity.CommentEntity;
 import sample.codearea.entity.QuestionEntity;
 import sample.codearea.entity.UserEntity;
 import sample.codearea.repository.AnswerRepository;
-import sample.codearea.repository.CommentRepository;
 import sample.codearea.repository.QuestionRepository;
 import sample.codearea.repository.UserRepository;
 
@@ -24,27 +22,26 @@ public class UserQuestionConfig {
 	// DB 테스트용으로 작성하였습니다. (@Bean 주석 비활성화시 DB에 Insert 수행)
 	@Bean
 	CommandLineRunner commandLineRunner(
-		QuestionRepository questionRepository,
-		UserRepository userRepository,
-		AnswerRepository answerRepository,
-		CommentRepository commentRepository
+			QuestionRepository questionRepository,
+			UserRepository userRepository,
+			AnswerRepository answerRepository
 	) {
 		return args -> {
 			// DB test
 
 			UserEntity user1 = UserEntity.builder()
-										 .email("min@gmail.com")
-										 .nickname("minky")
-										 .password("1234")
-										 .build();
+					.email("min@gmail.com")
+					.nickname("minky")
+					.password("1234")
+					.build();
 
 			userRepository.save(user1);
 
 			QuestionEntity question1 = QuestionEntity.builder()
-													 .user(user1)
-													 .title("JPA 엔티티 설정 방식 질문")
-													 .content("어떻게 하나요?")
-													 .build();
+					.user(user1)
+					.title("JPA 엔티티 설정 방식 질문")
+					.content("어떻게 하나요?")
+					.build();
 
 			questionRepository.save(question1);
 
@@ -59,15 +56,6 @@ public class UserQuestionConfig {
 					.build();
 
 			answerRepository.save(answer);
-
-
-			CommentEntity comment = CommentEntity.builder()
-					.user(user1)
-					.answer(answer)
-					.content("comment test")
-					.build();
-
-			commentRepository.save(comment);
 		};
 	}
 

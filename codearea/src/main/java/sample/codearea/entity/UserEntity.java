@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sample.codearea.common.TimeTrackableEntity;
 
+import javax.xml.stream.events.Comment;
+
 @Entity
 @Table(name = "_USER") // TODO: h2에서 user가 예약 키워드라 임시로 설정하였다.
 @Getter
@@ -35,6 +37,9 @@ public class UserEntity extends TimeTrackableEntity {
 
 	@OneToMany(mappedBy = "user")
 	private List<AnswerEntity> answers = new ArrayList<>();
+
+	@OneToMany(mappedBy = "user")
+	private List<CommentEntity> comments = new ArrayList<>();
 
 	// https://www.baeldung.com/jpa-many-to-many
 	// 사용자 질문 투표 Entity는 위 링크 참고 바랍니다.
