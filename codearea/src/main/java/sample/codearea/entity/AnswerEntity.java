@@ -13,7 +13,8 @@ import sample.codearea.common.TimeTrackableEntity;
 @NoArgsConstructor
 @DynamicInsert
 @Builder
-@Entity(name = "answer")
+@Entity
+@Table(name = "answer")
 public class AnswerEntity extends TimeTrackableEntity {
 
     @Id
@@ -21,12 +22,18 @@ public class AnswerEntity extends TimeTrackableEntity {
     @Column(name = "answerId", nullable = false)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", nullable = false)
+    private UserEntity user;
+
     @Column(nullable = false)
     private String content;
 
+    @Column(columnDefinition = "INT")
     @ColumnDefault("0")
     private Integer likes;
 
+    @Column(columnDefinition = "INT")
     @ColumnDefault("0")
     private Integer hates;
 }
