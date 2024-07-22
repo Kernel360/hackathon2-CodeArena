@@ -10,16 +10,16 @@ import sample.codearea.repository.AnswerRepository;
 import sample.codearea.repository.QuestionRepository;
 import sample.codearea.repository.UserRepository;
 
-/**
- * DB에 관계가 잘 설정되는지 테스트하기 위한 용도이며
- * 추후 제거될 Class입니다.
- * - 주 테스트 : Scrap이 작동하는지. ( UserService.scrap(question) )
- */
-
 @Configuration
 public class UserQuestionConfig {
 
-	// DB 테스트용으로 작성하였습니다. (@Bean 주석 비활성화시 DB에 Insert 수행)
+	/**
+	 * NOTE: DB 테스트는 여기서 모두 진행합니다.
+	 *   초기화할 데이터 목록입니다.
+	 *    1. 사용자 (2명)
+	 *    2. 질문 (사용자당 10개)
+	 *    3. 사용자 - 질문 스크랩 (사용자당 2개)
+	 */
 	@Bean
 	CommandLineRunner commandLineRunner(
 			QuestionRepository questionRepository,
@@ -47,6 +47,7 @@ public class UserQuestionConfig {
 
 			// do scrap
 			user1.getQuestionScraps().add(question1);
+
 			// save를 해야만 테이블에 반영되는가...?
 			userRepository.save(user1);
 
