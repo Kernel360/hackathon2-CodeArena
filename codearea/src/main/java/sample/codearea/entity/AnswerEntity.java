@@ -7,6 +7,9 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import sample.codearea.common.TimeTrackableEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -27,6 +30,10 @@ public class AnswerEntity extends TimeTrackableEntity {
     @JoinColumn(name = "userId", nullable = false)
     private UserEntity user;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "questionId", nullable = false)
+    private QuestionEntity question;
+
     @Column(nullable = false)
     private String content;
 
@@ -37,4 +44,7 @@ public class AnswerEntity extends TimeTrackableEntity {
     @Column(columnDefinition = "INT")
     @ColumnDefault("0")
     private Integer hates;
+
+    @OneToMany(mappedBy = "answer")
+    private List<CommentEntity> comments = new ArrayList<>();
 }
