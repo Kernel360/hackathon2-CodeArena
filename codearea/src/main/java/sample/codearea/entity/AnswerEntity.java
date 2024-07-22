@@ -30,6 +30,10 @@ public class AnswerEntity extends TimeTrackableEntity {
     @JoinColumn(name = "userId", nullable = false)
     private UserEntity user;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "questionId", nullable = false)
+    private QuestionEntity question;
+
     @Column(nullable = false)
     private String content;
 

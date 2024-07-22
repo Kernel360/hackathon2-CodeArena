@@ -52,6 +52,7 @@ public class UserQuestionConfig {
 
 			AnswerEntity answer = AnswerEntity.builder()
 					.user(user1)
+					.question(question1)
 					.content("test")
 					.build();
 

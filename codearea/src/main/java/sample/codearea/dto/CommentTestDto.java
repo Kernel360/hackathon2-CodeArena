@@ -12,7 +12,7 @@ import lombok.*;
 public class CommentTestDto {
 
     private Long userId;
-    private  Long answerId;
+    private Long answerId;
 
     @NotEmpty
     private String userName;

@@ -2,6 +2,7 @@ package sample.codearea.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import sample.codearea.common.TimeTrackableEntity;
 
 
 @Entity
@@ -9,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CommentEntity {
+public class CommentEntity extends TimeTrackableEntity {
 
 
     @Id
@@ -17,14 +18,13 @@ public class CommentEntity {
     @Column(name = "commentId")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", nullable = false)
     private UserEntity user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "answerId", nullable = false)
     private AnswerEntity answer;
-
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
