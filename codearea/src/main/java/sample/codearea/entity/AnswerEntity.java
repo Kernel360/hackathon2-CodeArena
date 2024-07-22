@@ -1,5 +1,6 @@
 package sample.codearea.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -25,7 +26,7 @@ public class AnswerEntity extends TimeTrackableEntity {
     @Column(name = "answerId", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", nullable = false)
     private UserEntity user;
 

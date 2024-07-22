@@ -1,5 +1,7 @@
 package sample.codearea.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ public class UserEntity extends TimeTrackableEntity {
 	private List<QuestionEntity> questions = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user")
+	@JsonIgnore
 	private List<AnswerEntity> answers = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user")
