@@ -22,26 +22,26 @@ public class UserQuestionConfig {
 	 */
 	@Bean
 	CommandLineRunner commandLineRunner(
-		QuestionRepository questionRepository,
-		UserRepository userRepository,
-		AnswerRepository answerRepository
+			QuestionRepository questionRepository,
+			UserRepository userRepository,
+			AnswerRepository answerRepository
 	) {
 		return args -> {
 			// DB test
 
 			UserEntity user1 = UserEntity.builder()
-										 .email("min@gmail.com")
-										 .nickname("minky")
-										 .password("1234")
-										 .build();
+					.email("min@gmail.com")
+					.nickname("minky")
+					.password("1234")
+					.build();
 
 			userRepository.save(user1);
 
 			QuestionEntity question1 = QuestionEntity.builder()
-													 .user(user1)
-													 .title("JPA 엔티티 설정 방식 질문")
-													 .content("어떻게 하나요?")
-													 .build();
+					.user(user1)
+					.title("JPA 엔티티 설정 방식 질문")
+					.content("어떻게 하나요?")
+					.build();
 
 			questionRepository.save(question1);
 
@@ -53,6 +53,7 @@ public class UserQuestionConfig {
 
 			AnswerEntity answer = AnswerEntity.builder()
 					.user(user1)
+					.question(question1)
 					.content("test")
 					.build();
 

@@ -15,7 +15,7 @@ public class CodeareaApplication {
 		SpringApplication.run(CodeareaApplication.class, args);
 	}
 
-	@Bean
+	//@Bean
 	TestDataInit testDataInit(UserRepository userRepository, AnswerService answerService){
 		return new TestDataInit(userRepository, answerService);
 	}
