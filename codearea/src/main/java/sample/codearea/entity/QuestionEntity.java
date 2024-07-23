@@ -50,16 +50,26 @@ public class QuestionEntity extends TimeTrackableEntity {
 	@OneToMany(mappedBy = "question")
 	private List<AnswerEntity> answers = new ArrayList<>();
 
+	/**
+	 * 테스트를 위해 views, likes, hates 추가
+	 * 추후 해당 필드는 삭제 예정
+	 */
 	@Builder
 	protected QuestionEntity(
 		Long id,
 		UserEntity user,
 		String title,
-		String content
+		String content,
+		Integer views,
+		Integer likes,
+		Integer hates
 	) {
 		this.id = id;
 		this.user = user;
 		this.title = title;
 		this.content = content;
+		this.views = views;
+		this.likes = likes;
+		this.hates = hates;
 	}
 }

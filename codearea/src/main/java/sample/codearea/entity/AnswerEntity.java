@@ -45,6 +45,7 @@ public class AnswerEntity extends TimeTrackableEntity {
     @ColumnDefault("0")
     private Integer hates;
 
+    @Builder.Default
     @OneToMany(mappedBy = "answer")
     private List<CommentEntity> comments = new ArrayList<>();
 }
