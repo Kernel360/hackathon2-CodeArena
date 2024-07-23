@@ -1,13 +1,8 @@
 package sample.codearea.service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import sample.codearea.entity.QuestionEntity;
 import sample.codearea.repository.QuestionRepository;
@@ -52,9 +47,9 @@ public class QuestionService {
 
 		switch (searchCategory) {
 			case ("email"):
-				return questionRepository.findAllByUserEntity_EmailContaining(searchString, pageRequest);
+				return questionRepository.findAllByUser_EmailContaining(searchString, pageRequest);
 			case ("nickname"):
-				return questionRepository.findAllByUserEntity_NicknameContaining(searchString, pageRequest);
+				return questionRepository.findAllByUser_NicknameContaining(searchString, pageRequest);
 			case ("title"):
 				return questionRepository.findAllByTitleContaining(searchString, pageRequest);
 			case ("content"):

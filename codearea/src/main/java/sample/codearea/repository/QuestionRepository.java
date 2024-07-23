@@ -1,16 +1,10 @@
 package sample.codearea.repository;
 
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import sample.codearea.entity.QuestionEntity;
-import sample.codearea.entity.UserEntity;
 
 // 1. 조건 검색 (email, nickname, title, content)
 // 2. 정렬 (조회순, 좋아요 순, 싫어요 순)
@@ -18,9 +12,9 @@ import sample.codearea.entity.UserEntity;
 public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> {
 
 
-	Page<QuestionEntity> findAllByUserEntity_EmailContaining(String email, PageRequest pageRequest);
+	Page<QuestionEntity> findAllByUser_EmailContaining(String email, PageRequest pageRequest);
 
-	Page<QuestionEntity> findAllByUserEntity_NicknameContaining(String nickname, PageRequest pageRequest);
+	Page<QuestionEntity> findAllByUser_NicknameContaining(String nickname, PageRequest pageRequest);
 
 	Page<QuestionEntity> findAllByTitleContaining(String title, PageRequest pageRequest);
 
