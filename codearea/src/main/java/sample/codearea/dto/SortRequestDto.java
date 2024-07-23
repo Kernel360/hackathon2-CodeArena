@@ -16,9 +16,11 @@ import lombok.ToString;
 @Builder
 public class SortRequestDto {
 
+	static final String DEFAULT_SORT_STRATEGY = "createdAt";
+
 	@Pattern(
-		regexp = "^(views|likes|hates)$",
+		regexp = "^(createdAt|views|likes|hates)$",
 		message = "정렬이 불가능한 옵션입니다"
 	)
-	private String target;
+	private String target = DEFAULT_SORT_STRATEGY;
 }
