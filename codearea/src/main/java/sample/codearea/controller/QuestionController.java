@@ -10,7 +10,10 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +26,7 @@ import sample.codearea.service.QuestionService;
 
 @Controller
 @RequestMapping("/questions")
+@CrossOrigin(origins = "http://localhost:8080/questions")
 public class QuestionController {
 
 	private final QuestionService questionService;
@@ -38,7 +42,7 @@ public class QuestionController {
 	//          ex) /question?nickname=김영한
 	//       2. 만약 검색 조건이 2개 이상 들어오면, 예외를 발생
 
-	@GetMapping("")
+	@PostMapping("")
 	public ResponseEntity<?> getQuestions(
 		@RequestParam(value = "category") Optional<String> searchCategory,
 		@RequestParam(value = "search") Optional<String> searchString,

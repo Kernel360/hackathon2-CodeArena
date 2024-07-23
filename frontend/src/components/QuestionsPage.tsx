@@ -3,10 +3,11 @@ import { requestQuestionListPaginated } from '@/api/requestQuestionList';
 import QuestionPreviewCard, { QuestionPreviewData } from './question-list/QuestionPreviewCard';
 import SearchBar from './question-list/SearchBar';
 import { PaginatedItems } from './question-list/Pagination';
+import { Button } from './ui/button';
 
 const PAGE_SIZE_DEFAULT = 5;
 const PAGE_NUMBER_DEFAULT = 1;
-const SORT_STRATEGY_DEFAULT = "createAt";
+const SORT_STRATEGY_DEFAULT = "createdAt";
 const SEARCH_CATEGORY_DEFAULT = "title";
 
 export const QuestionsPage = () => {
@@ -34,16 +35,16 @@ export const QuestionsPage = () => {
         setCurrentPageNumber(data.pagination.currentPage);
       }
     })();
-  // }, [currentPageNumber]);
-  }, []);
+  }, [currentPageNumber]);
+  // }, []);
 
-  const handleSearchClick = () => {
-    setCurrentPageNumber(0);
-  }
+  // const handleSearchClick = () => {
+    // setCurrentPageNumber(0);
+  // }
 
-  const handlePageClick = (selectedItem: { selected: number }) => {
-    setCurrentPageNumber(selectedItem.selected);
-  };
+  // const handlePageClick = (selectedItem: { selected: number }) => {
+    // setCurrentPageNumber(selectedItem.selected);
+  // };
 
   return (
     <div>
@@ -56,6 +57,26 @@ export const QuestionsPage = () => {
           sort={sortStrategy}
           onSortChange={setSortCategory}
         />
+        <Button type="submit" onClick={() => {
+          (async () => {
+            const data = await requestQuestionListPaginated(
+              currentPageNumber,
+              PAGE_SIZE_DEFAULT,
+              sortStrategy as any,  // 정렬 조건
+              searchCategory,     // 검색 조건
+              searchQuery,               // 검색 단어
+            );
+            console.log(searchQuery, searchCategory);
+            console.log(data);
+            if (data) {
+              setQuestions(data.questionPreviews);
+              setTotalPageCount(data.pagination.totalPage);
+              setCurrentPageNumber(data.pagination.currentPage);
+            }
+          })();
+        }}>
+          검색하기
+        </Button>
       </div>
       <div className=' mt-10 mb-10 w-full flex flex-col items-center space-y-2'>
         {questions.map((question, index) => (

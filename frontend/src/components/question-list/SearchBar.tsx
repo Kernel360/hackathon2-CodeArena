@@ -41,8 +41,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange, filt
       </Select>
 
       <Input type="text" placeholder="search" onChange={(e) => onSearchChange(e.target.value)} />
-      <Button type="submit">검색하기</Button>
-
       <Select onValueChange={(value) => onSortChange(value)}>
         <SelectTrigger className="w-[200px]">
           <SelectValue placeholder="정렬 조건" />
@@ -50,7 +48,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange, filt
         <SelectContent>
           <SelectGroup>
             <SelectLabel>Sort</SelectLabel>
-            <SelectItem value="createAt">최신 순</SelectItem>
+            <SelectItem value="createdAt">최신 순</SelectItem>
             <SelectItem value="views">조회수 순</SelectItem>
             <SelectItem value="likes">좋아요 순</SelectItem>
             <SelectItem value="hates">싫어요 순</SelectItem>

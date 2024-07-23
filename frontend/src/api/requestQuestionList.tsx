@@ -34,24 +34,9 @@ export async function requestQuestionListPaginated(
 
   let requestUrl = `${API_URL}/questions`;
 
+
   if (searchQuery) {
-    switch (searchCategory) {
-      case ("title"):
-        requestUrl = `${API_URL}/questions?title=${searchQuery}`;
-        break;
-      case ("content"):
-        requestUrl = `${API_URL}/questions?content=${searchQuery}`;
-        break;
-      case ("nickname"):
-        requestUrl = `${API_URL}/questions?email=${searchQuery}`;
-        break;
-      case ("email"):
-        requestUrl = `${API_URL}/questions?email=${searchQuery}`;
-        break;
-      default:
-        alert("검색 카테고리를 설정해주세요!");
-        break;
-    }
+    requestUrl = `${API_URL}/questions?category=${searchCategory}&search=${searchQuery}`;
   }
 
   const requestPayload: GET_paginationRequestFormat = {
@@ -63,14 +48,17 @@ export async function requestQuestionListPaginated(
       target: sort ?? "createdAt" // default to view
     },
   };
+  console.log(requestUrl);
+  console.log(requestPayload);
 
   const questionListReponse = await fetch(requestUrl, {
-    method: 'GET',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(requestPayload),
   });
+
 
 
   // on error
