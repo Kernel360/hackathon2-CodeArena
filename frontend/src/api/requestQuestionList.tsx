@@ -1,6 +1,5 @@
-import { QuestionPreviewData } from "@/components/question-list/QuestionPreview";
+import { QuestionPreviewData } from "@/components/question-list/QuestionPreviewCard";
 import { API_URL } from "./API_URL";
-import { QUESTIONS_DUMMY_DATA } from "./DUMMY/questions";
 
 export interface GET_paginationRequestFormat {
   pagination: {
@@ -8,7 +7,11 @@ export interface GET_paginationRequestFormat {
     pageSize: number,         // 한 페이지에 몇개가 들어가는지 
   },
   sort: {            // 기본 전략은 최신순 + 내림차순 입니다.
-    target: "views" | "likes" | "hates"
+    target:
+    "createdAt" |
+    "views" |
+    "likes" |
+    "hates"
   }
 }
 
@@ -21,36 +24,35 @@ export interface GET_paginationResponseFormat {
   questionPreviews: QuestionPreviewData[];
 }
 
-
-
 export async function requestQuestionListPaginated(
   page: number,
   pageSize: number,
   sort?: "views" | "likes" | "hates",
-  filter?: string,
-  searchQuery?: string,
+  searchCategory?: string,
+  searchQuery?: string | null,
 ) {
 
-  let requestUrl = "";
-  switch(filter) {
-    case ("title"):
-      requestUrl = `${API_URL}/questions?title=${searchQuery}`;
-      break;
-    case ("content"):
-      requestUrl = `${API_URL}/questions?content=${searchQuery}`;
-      break;
-    case ("nickname"):
-      requestUrl = `${API_URL}/questions?email=${searchQuery}`;
-      break;
-    case ("email"):
-      requestUrl = `${API_URL}/questions?email=${searchQuery}`;
-      break;
-    default:
-      requestUrl = `${API_URL}/questions`;
-      break;
-  }
+  let requestUrl = `${API_URL}/questions`;
 
-  return QUESTIONS_DUMMY_DATA;
+  if (searchQuery) {
+    switch (searchCategory) {
+      case ("title"):
+        requestUrl = `${API_URL}/questions?title=${searchQuery}`;
+        break;
+      case ("content"):
+        requestUrl = `${API_URL}/questions?content=${searchQuery}`;
+        break;
+      case ("nickname"):
+        requestUrl = `${API_URL}/questions?email=${searchQuery}`;
+        break;
+      case ("email"):
+        requestUrl = `${API_URL}/questions?email=${searchQuery}`;
+        break;
+      default:
+        alert("검색 카테고리를 설정해주세요!");
+        break;
+    }
+  }
 
   const requestPayload: GET_paginationRequestFormat = {
     pagination: {
@@ -58,11 +60,10 @@ export async function requestQuestionListPaginated(
       pageSize: pageSize,
     },
     sort: {
-      target: sort ?? "views" // default to view
+      target: sort ?? "createdAt" // default to view
     },
   };
 
-  /*
   const questionListReponse = await fetch(requestUrl, {
     method: 'GET',
     headers: {
@@ -81,5 +82,4 @@ export async function requestQuestionListPaginated(
 
   const body: GET_paginationResponseFormat = await questionListReponse.json();
   return body;
-  */
 }

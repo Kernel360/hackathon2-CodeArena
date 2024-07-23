@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ErrorPage } from "./ErrorPage";
 import LoginCard from "./components/login/LoginCard";
 import SignUpCard from "./components/signup/SignUpCard";
-import { QuestionHome } from "./components/question-list/Home";
+import { QuestionsPage } from "./components/QuestionsPage";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <div>
-        <QuestionHome />
+        <QuestionsPage />
       </div>
     ),
     errorElement: <ErrorPage />,
