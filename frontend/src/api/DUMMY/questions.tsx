@@ -1,7 +1,7 @@
 export const QUESTIONS_DUMMY_DATA = {
     pagination: {
         currentPage: 1,
-        totalPage: 1,
+        totalPage: 10,
     },
     questionPreviews: [
         {
