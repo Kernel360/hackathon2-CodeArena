@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/codearea.main.iml" filepath="$PROJECT_DIR$/.idea/modules/codearea.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/hackathon2-CodeArena.iml" filepath="$PROJECT_DIR$/.idea/hackathon2-CodeArena.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.sample.codearea.main.iml" filepath="$PROJECT_DIR$/.idea/modules/org.sample.codearea.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/sample.codearea.main.iml" filepath="$PROJECT_DIR$/.idea/modules/sample.codearea.main.iml" />
     </modules>
   </component>
 </project>

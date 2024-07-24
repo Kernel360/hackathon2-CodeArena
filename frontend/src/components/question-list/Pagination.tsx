@@ -31,7 +31,7 @@ export function PaginatedItems({
     return new Array(PAGEABLE_RANGE_DEFAULT)
       .fill(0)
       .map((_, idx) => (
-        <PaginationItem>
+        <PaginationItem key={idx}>
           <PaginationLink
             href="#"
             isActive={currentPageNumber === (startPageNumber + idx)}

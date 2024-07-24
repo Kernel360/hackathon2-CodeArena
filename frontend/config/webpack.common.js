@@ -16,6 +16,13 @@ module.exports = {
         },
         exclude: /node_modules/,
       },
+      {
+        test: /\.(png|svg)$/,
+        loader: 'file-loader',
+        options: {
+          outputPath: 'assets/'
+        },
+      },
     ],
   },
   plugins: [
