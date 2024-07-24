@@ -1,6 +1,5 @@
 package sample.codearea.dto;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 @Getter
@@ -9,15 +8,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CommentTestDto {
+public class QuestionRequestDto {
 
-    private Long userId;
-    private Long answerId;
-
-    @NotEmpty
     private String userName;
-
-    @NotEmpty
+    private String title;
     private String content;
 }
-
