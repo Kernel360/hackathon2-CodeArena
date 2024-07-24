@@ -104,7 +104,7 @@ public class QuestionService {
 
 		QuestionEntity saved = questionRepository.save(question);
 
-		return questionConverter.toDto(saved, userId);
+		return questionConverter.toDto(saved, loginId);
 
 	}
 
