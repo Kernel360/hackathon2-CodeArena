@@ -2,6 +2,7 @@ package sample.codearea.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +62,9 @@ public class QuestionEntity extends TimeTrackableEntity {
 		String content,
 		Integer views,
 		Integer likes,
-		Integer hates
+		Integer hates,
+		LocalDateTime createdAt,
+		LocalDateTime updatedAt
 	) {
 		this.id = id;
 		this.user = user;
@@ -70,5 +73,7 @@ public class QuestionEntity extends TimeTrackableEntity {
 		this.views = (views != null) ? views : 0;
 		this.likes = (likes != null) ? likes : 0;
 		this.hates = (hates != null) ? hates : 0;
+		this.createdAt = (createdAt != null) ? createdAt : LocalDateTime.now();
+		this.updatedAt = (updatedAt != null) ? updatedAt : LocalDateTime.now();
 	}
 }

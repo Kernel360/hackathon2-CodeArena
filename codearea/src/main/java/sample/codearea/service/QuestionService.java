@@ -26,19 +26,16 @@ public class QuestionService {
 	private final QuestionConverter questionConverter;
 
 	public QuestionResponseDto findQuestion(Long questionId, HttpServletRequest httpServletRequest) {
-		HttpSession session = httpServletRequest.getSession();
-		Object loginUserId = session.getAttribute(SessionConst.LOGIN_USER);
-		UserQuestionCK userQuestionCK = new UserQuestionCK((Long) loginUserId, questionId);
-
 		QuestionEntity question = questionRepository.findById(questionId)
 				.orElseThrow(() -> new IllegalArgumentException("Not Found Question"));
-		UserEntity loginedUser = userRepository.findById((Long) loginUserId)
-				.orElseThrow(() -> new IllegalArgumentException("Not Found User"));
 
+		UserQuestionCK userQuestionCK = new UserQuestionCK((Long) question.getUser().getId(), questionId);
 		QuestionResponseDto questionResponseDto;
         questionResponseDto = new QuestionResponseDto().builder()
-				.userQuestionCK(userQuestionCK)
-				.userName(loginedUser.getNickname())
+				.userId(userQuestionCK.getUserId())
+				.questionId(userQuestionCK.getQuestionId())
+				.userName(question.getUser().getNickname())
+				.createdAt(question.getCreatedAt())
 				.views(question.getViews())
 				.title(question.getTitle())
 				.content(question.getContent())
