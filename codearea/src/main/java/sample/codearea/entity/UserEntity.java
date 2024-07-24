@@ -51,5 +51,16 @@ public class UserEntity extends TimeTrackableEntity {
 			joinColumns = {@JoinColumn(name="userId")},
 			inverseJoinColumns = {@JoinColumn(name="questionId")})
 	private List<QuestionEntity> questionScraps = new ArrayList<>();	//TODO : UserMyInfoResponseDto 추가 예정
-
+	@Builder
+	private UserEntity(
+			Long id,
+			String email,
+			String nickname,
+			String password
+	) {
+		this.id = id;
+		this.email = email;
+		this.nickname = nickname;
+		this.password = password;
+	}
 }
