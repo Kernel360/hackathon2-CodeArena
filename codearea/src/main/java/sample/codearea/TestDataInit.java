@@ -47,6 +47,12 @@ public class TestDataInit {
         userRepository.save(user2);
         userRepository.save(user3);
 
+        questionCreate(user1, user2, user3);
+        answerCreate(user1);
+        commentCreate(user1);
+    }
+
+    private void questionCreate(UserEntity user1, UserEntity user2, UserEntity user3) {
         for(int i = 1; i <= 10; i++) {
             QuestionEntity question = QuestionEntity.builder()
                     .user(user1)
@@ -83,10 +89,14 @@ public class TestDataInit {
             questionRepository.save(question);
         }
 
+
+    }
+
+    private void answerCreate(UserEntity user) {
         for(int i = 1; i <= 5; i++) {
             AnswerEntity answer1 = AnswerEntity.builder()
                     .question(questionRepository.findById(1L).orElseThrow())
-                    .user(user1)
+                    .user(user)
                     .content("이거는 무슨 의미인가요? : " + i)
                     .build();
             answerRepository.save(answer1);
@@ -95,28 +105,68 @@ public class TestDataInit {
         for(int i = 1; i <= 5; i++) {
             AnswerEntity answer2 = AnswerEntity.builder()
                     .question(questionRepository.findById(2L).orElseThrow())
-                    .user(user1)
+                    .user(user)
                     .content("두번째 질문에 대한 답변 : " + i)
                     .build();
             answerRepository.save(answer2);
         }
 
-//        CommentEntity comment1 = CommentEntity.builder()
-//                .user(user2)
-//                .answer(commentRepository.findById(1L).get().getAnswer())
-//                .content("첫 번째 답변에 대한 댓글")
-//                .build();
-//        commentRepository.save(comment1);
-//
-//        CommentEntity comment2 = CommentEntity.builder()
-//                .user(user2)
-//                .answer(commentRepository.findById(1L).get().getAnswer())
-//                .content("두 번째 답변에 대한 댓글")
-//                .build();
-//
-//        commentRepository.save(comment2);
+        for(int i = 1; i <= 5; i++) {
+            AnswerEntity answer30 = AnswerEntity.builder()
+                    .question(questionRepository.findById(30L).orElseThrow())
+                    .user(user)
+                    .content("질문에 대한 답변 : " + i)
+                    .build();
+            answerRepository.save(answer30);
+        }
 
+    }
 
+    private void commentCreate(UserEntity user) {
+        CommentEntity comment1 = CommentEntity.builder()
+                .user(user)
+                .answer(answerRepository.findById(1L).get())
+                .content("첫 번째 답변 댓글 테스트")
+                .build();
+        commentRepository.save(comment1);
+
+        CommentEntity comment2 = CommentEntity.builder()
+                .user(user)
+                .answer(answerRepository.findById(2L).get())
+                .content("두 번째 답변 댓글 테스트")
+                .build();
+        commentRepository.save(comment2);
+
+        CommentEntity comment3 = CommentEntity.builder()
+                .user(user)
+                .answer(answerRepository.findById(1L).get())
+                .content("첫 번째 답변에 대한 댓글")
+                .build();
+        commentRepository.save(comment3);
+
+        CommentEntity comment4 = CommentEntity.builder()
+                .user(user)
+                .answer(answerRepository.findById(2L).get())
+                .content("두 번째 답변에 대한 댓글")
+                .build();
+
+        commentRepository.save(comment4);
+
+        CommentEntity comment5 = CommentEntity.builder()
+                .user(user)
+                .answer(answerRepository.findById(11L).get())
+                .content("두 번째 답변에 대한 댓글")
+                .build();
+
+        commentRepository.save(comment5);
+
+        CommentEntity comment6 = CommentEntity.builder()
+                .user(user)
+                .answer(answerRepository.findById(11L).get())
+                .content("두 번째 답변에 대한 댓글")
+                .build();
+
+        commentRepository.save(comment6);
     }
 
 }
