@@ -90,17 +90,17 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<?> login(UserLoginRequestDto userLoginRequestDto, HttpServletRequest httpServletRequest) throws IllegalAccessException {
+    public ResponseEntity<UserLoginResponseDto> login(UserLoginRequestDto userLoginRequestDto, HttpServletRequest httpServletRequest) throws IllegalAccessException {
 
         var data = userLoginRequestDto;
 
         UserEntity userEntity = getUserByEmail(data.getEmail()).orElseThrow(() -> new IllegalArgumentException("user not found"));
-
+        // TODO: 로그인 성공시 id, email, nickname 리턴하도록 수정
         HttpSession session = httpServletRequest.getSession();
-        Object loginUserEmail = session.getAttribute(SessionConst.LOGIN_USER);
+        Object loginUserId = session.getAttribute(SessionConst.LOGIN_USER);
 
         // session check and compare if login request email and email saved on session are same
-        if(loginUserEmail != null && data.getEmail().equals(userEntity.getEmail())){
+        if(loginUserId != null && data.getEmail().equals(userEntity.getEmail())){
             throw new IllegalAccessException("already login");
 //            return ResponseEntity.status(HttpStatus.IM_USED)
 //                    .body(data);
@@ -109,12 +109,18 @@ public class UserService {
         // user info check by email and check password
         if(userEntity != null && bCryptPasswordEncoder.matches(data.getPassword(), userEntity.getPassword())){
             session.setAttribute(SessionConst.LOGIN_USER, userEntity.getId());
+
+            UserLoginResponseDto userLoginResponseDto = new UserLoginResponseDto();
+            userLoginResponseDto.setId(userEntity.getId());
+            userLoginResponseDto.setNickname(userEntity.getNickname());
+            userLoginResponseDto.setEmail(userEntity.getEmail());
+
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(data);
+                    .body(userLoginResponseDto);
         }else {
             log.info("login error");
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(data);
+                    .body(null);
         }
     }
 
