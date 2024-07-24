@@ -1,12 +1,11 @@
 package sample.codearea.service;
 
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import sample.codearea.dto.AnswerRequestDto;
+
 import sample.codearea.dto.CommentRequestDto;
-import sample.codearea.dto.CommentTestDto;
+import sample.codearea.dto.CommentResponseDto;
 import sample.codearea.entity.AnswerEntity;
 import sample.codearea.entity.CommentEntity;
 import sample.codearea.entity.UserEntity;
@@ -16,6 +15,7 @@ import sample.codearea.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,15 +29,25 @@ public class CommentService {
         return commentRepository.findById(commentId);
     }
 
-    public List<CommentEntity> findAll() {
-        return commentRepository.findAll();
+    public List<CommentResponseDto> findByAnswerId(Long answerId) {
+        AnswerEntity answerEntity = answerRepository.findById(answerId).orElse(null);
+       return commentRepository.findByAnswer(answerEntity).stream()
+            .map(CommentConverter::toDto)
+            .collect(Collectors.toList());
+    }
+
+    public List<CommentResponseDto> findAll() {
+
+        return commentRepository.findAll().stream()
+            .map(CommentConverter::toDto)
+            .collect(Collectors.toList());
     }
 
 
-    public CommentEntity save(CommentTestDto commentRequestDto) {
+    public void save(CommentRequestDto commentRequestDto) {
 
-        UserEntity user = userRepository.findById(commentRequestDto.getUserId()).get();
-        AnswerEntity answer = answerRepository.findById(commentRequestDto.getAnswerId()).get();
+        UserEntity user = userRepository.findById(commentRequestDto.getUserId()).orElseThrow(() -> new IllegalArgumentException("Not found Question"));
+        AnswerEntity answer = answerRepository.findById(commentRequestDto.getAnswerId()).orElseThrow(()-> new IllegalArgumentException("Not found Question"));
 
 
         CommentEntity comment = CommentEntity.builder()
@@ -45,13 +55,12 @@ public class CommentService {
                 .answer(answer)
                 .content(commentRequestDto.getContent())
                 .build();
+        CommentEntity savedComment = commentRepository.save(comment);
 
-        CommentEntity save = commentRepository.save(comment);
-
-        return save;
+        CommentConverter.toDto(savedComment);
     }
 
-    public void update(Long commentId, CommentTestDto commentRequestDto) {
+    public void update(Long commentId, CommentRequestDto commentRequestDto) {
         CommentEntity comment = commentRepository.findById(commentId).orElseThrow();
 
         comment.setContent(commentRequestDto.getContent());
