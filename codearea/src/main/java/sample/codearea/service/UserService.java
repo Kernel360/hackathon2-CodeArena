@@ -86,7 +86,6 @@ public class UserService {
 
             return ResponseEntity.status(HttpStatus.OK)
                     .body(data);
-
         }
     }
 
