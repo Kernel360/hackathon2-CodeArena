@@ -1,5 +1,7 @@
 package sample.codearea.config;
 
+import java.util.Arrays;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +14,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -23,12 +28,12 @@ public class SecurityConfig {
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {   // for hash encrypt
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {  // for ignore the confirmation about static resources
-        return (web) -> web.ignoring()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-    }
+    //
+    // @Bean
+    // public WebSecurityCustomizer webSecurityCustomizer() {  // for ignore the confirmation about static resources
+    //     return (web) -> web.ignoring()
+    //             .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    // }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -49,4 +54,5 @@ public class SecurityConfig {
                 .logout(LogoutConfigurer::permitAll);
         return http.build();
     }
+
 }

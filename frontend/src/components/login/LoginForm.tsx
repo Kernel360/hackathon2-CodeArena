@@ -36,16 +36,18 @@ export default function LoginForm() {
 
     function onSubmit(values: z.infer<typeof formSchema>) {
 
-        console.log(values);
 
         // TODO: send to server
         (async () => {
             const response = await requestLogIn(values); // 로그인 Request 전송
             const responseBody = await response.json();
-            alert(responseBody);
-
+            console.log(responseBody)
+            alert(responseBody.email +"님 환영합니다.");
+            
             if (response.ok) {
-                navigate("/");
+                // 로그인 정보를 세션에 저장함.
+                sessionStorage.setItem("user", JSON.stringify({email : responseBody.email}));
+                window.location.href = "/";
             }
         })(/* IIFE */);
     }

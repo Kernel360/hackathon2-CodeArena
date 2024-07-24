@@ -20,7 +20,7 @@ export async function requestSignUp(
     formData: z.infer<typeof formSchemaSignUp>
 ) {
 
-  const requestUrl = `${API_URL}/signup`;
+  const requestUrl = `${API_URL}/user/signup`;
 
   const requestPayload: POST_SignUpRequestFormat = {
     nickname: formData.nickname,
