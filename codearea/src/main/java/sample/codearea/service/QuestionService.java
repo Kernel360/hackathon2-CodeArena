@@ -138,5 +138,4 @@ public class QuestionService {
 		Long loginId = (Long) session.getAttribute(SessionConst.LOGIN_USER);
 		return loginId;
 	}
-
 }

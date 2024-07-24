@@ -6,6 +6,8 @@ import { QuestionsPage } from "./components/QuestionsPage";
 import LogoLogin from "./components/header";
 import {QuestionDetail} from "./components/question-detail/QuestionDetail";
 import { AuthProvider } from "./context/AuthContext";
+import { QuestionDetailAdd } from "./components/question-detail/QuestionDetilAdd";
+import { QuestionDetailEdit } from "./components/question-detail/QuestionDetailEdit";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +52,20 @@ const router = createBrowserRouter([
     <QuestionDetail/>
   ),
     errorElement: <ErrorPage />,
+},
+  {
+    path:"/questions/create",
+    element:(
+    <QuestionDetailAdd/>
+  ),
+    errorElement: <ErrorPage />,
+},
+{
+  path:"/question/edit",
+  element:(
+  <QuestionDetailEdit/>
+),
+  errorElement: <ErrorPage />,
 }
 ]);
 

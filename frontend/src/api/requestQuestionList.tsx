@@ -51,6 +51,7 @@ export async function requestQuestionListPaginated(
 
   const questionListReponse = await fetch(requestUrl, {
     method: 'POST',
+    credentials : 'include',
     headers: {
       'Content-Type': 'application/json',
     },

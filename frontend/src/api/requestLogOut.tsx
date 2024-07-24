@@ -8,6 +8,7 @@ export async function requestLogout(
  
   const logOutResponse = await fetch(requestUrl, {
     method: 'GET',
+    credentials : 'include',
     headers: {
       'Content-Type': 'application/json',
     },
