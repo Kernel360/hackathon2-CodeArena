@@ -1,10 +1,13 @@
 package sample.codearea.service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import sample.codearea.constant.SessionConst;
 import sample.codearea.dto.QuestionRequestDto;
 import sample.codearea.dto.QuestionResponseDto;
 import sample.codearea.entity.QuestionEntity;
@@ -70,8 +73,9 @@ public class QuestionService {
 		}
 	}
 
-	public QuestionResponseDto createQuestion(Long userId, QuestionRequestDto questionRequestDto) {
-		UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User Not Found"));
+	public QuestionResponseDto createQuestion(QuestionRequestDto questionRequestDto, HttpServletRequest httpServletRequest) {
+		Long loginId = getLoginId(httpServletRequest);
+		UserEntity user = userRepository.findById(loginId).orElseThrow(() -> new IllegalArgumentException("User Not Found"));
 
 		QuestionEntity question = QuestionEntity.builder()
 				.user(user)
@@ -86,8 +90,9 @@ public class QuestionService {
 		return responseDto;
 	}
 
-	public void updateQuestion(Long userId, Long questionId, QuestionRequestDto questionRequestDto) {
-		UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Not Found User"));
+	public void updateQuestion(Long questionId, QuestionRequestDto questionRequestDto, HttpServletRequest httpServletRequest) {
+		Long loginId = getLoginId(httpServletRequest);
+		UserEntity user = userRepository.findById(loginId).orElseThrow(() -> new IllegalArgumentException("Not Found User"));
 		QuestionEntity question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("Not Found Question"));
 
 		if(user == question.getUser()){
@@ -101,21 +106,23 @@ public class QuestionService {
 
 	}
 
-	public void deleteQuestion(Long userId, Long questionId) {
-		UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Not Found User"));
+	public void deleteQuestion(Long questionId, HttpServletRequest httpServletRequest) {
+		Long loginId = getLoginId(httpServletRequest);
+		UserEntity user = userRepository.findById(loginId).orElseThrow(() -> new IllegalArgumentException("Not Found User"));
 		QuestionEntity question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("Not Found Question"));
 
 		if(user == question.getUser()){
 			questionRepository.delete(question);
-
-			/**
-			 * 질문 삭제 시 답변(Answer), 댓글(Comment)까지 삭제 되어야 함.
-			 */
 		}
 		else {
 			throw new IllegalArgumentException("허가되지 않은 사용자입니다.");
 		}
 	}
 
+	private static Long getLoginId(HttpServletRequest httpServletRequest) {
+		HttpSession session = httpServletRequest.getSession();
+		Long loginId = (Long) session.getAttribute(SessionConst.LOGIN_USER);
+		return loginId;
+	}
 
 }

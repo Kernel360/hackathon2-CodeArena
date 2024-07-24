@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import sample.codearea.entity.AnswerEntity;
 import sample.codearea.entity.CommentEntity;
 import sample.codearea.entity.QuestionEntity;
@@ -21,6 +22,7 @@ public class TestDataInit {
     private final QuestionRepository questionRepository;
     private final AnswerRepository answerRepository;
     private final CommentRepository commentRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @EventListener(ApplicationReadyEvent.class)
     public void initData() {
@@ -28,20 +30,21 @@ public class TestDataInit {
         UserEntity user1 = UserEntity.builder()
                 .email("min@gmail.com")
                 .nickname("minky")
-                .password("1234")
+                .password(bCryptPasswordEncoder.encode("1234"))
                 .build();
 
         UserEntity user2 = UserEntity.builder()
                 .email("kimkim@gmail.com")
                 .nickname("kimkim")
-                .password("4321")
+                .password(bCryptPasswordEncoder.encode("1234"))
                 .build();
 
         UserEntity user3 = UserEntity.builder()
                 .email("yang@gmail.com")
                 .nickname("yangyang")
-                .password("12345678")
+                .password(bCryptPasswordEncoder.encode("1234"))
                 .build();
+
 
         userRepository.save(user1);
         userRepository.save(user2);
