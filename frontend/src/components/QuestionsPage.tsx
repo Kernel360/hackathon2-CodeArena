@@ -36,15 +36,6 @@ export const QuestionsPage = () => {
       }
     })();
   }, [currentPageNumber]);
-  // }, []);
-
-  // const handleSearchClick = () => {
-    // setCurrentPageNumber(0);
-  // }
-
-  // const handlePageClick = (selectedItem: { selected: number }) => {
-    // setCurrentPageNumber(selectedItem.selected);
-  // };
 
   return (
     <div>

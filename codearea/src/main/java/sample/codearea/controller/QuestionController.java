@@ -1,6 +1,7 @@
 package sample.codearea.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ import sample.codearea.service.QuestionService;
 @Controller
 @RequestMapping("/questions")
 @CrossOrigin(origins = "http://localhost:8080/questions")
+@SessionAttributes("user")
 public class QuestionController {
 
 	private final QuestionService questionService;
@@ -94,11 +96,9 @@ public class QuestionController {
 	}
 
 
-
 	@PostMapping("/add")
-	public ResponseEntity<QuestionResponseDto> createQuestion(@RequestBody QuestionRequestDto questionRequestDto) {
-		Long userId = 1L; // 세션으로 변경 필요
-		QuestionResponseDto question = questionService.createQuestion(userId, questionRequestDto);
+	public ResponseEntity<QuestionResponseDto> createQuestion(@RequestBody QuestionRequestDto questionRequestDto, HttpServletRequest httpServletRequest) {
+		QuestionResponseDto question = questionService.createQuestion(questionRequestDto, httpServletRequest);
 
 		return ResponseEntity.ok(question);
 	}
@@ -111,17 +111,16 @@ public class QuestionController {
 	}
 
 	@PutMapping("/{questionId}")
-	public ResponseEntity<?> updateQuestion(@PathVariable Long questionId, @RequestBody QuestionRequestDto questionRequestDto) {
-		Long userId = 1L;
-		questionService.updateQuestion(userId, questionId, questionRequestDto);
+	public ResponseEntity<?> updateQuestion(@PathVariable Long questionId, @RequestBody QuestionRequestDto questionRequestDto, HttpServletRequest httpServletRequest) {
+		questionService.updateQuestion(questionId, questionRequestDto, httpServletRequest);
 
 		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping("/{questionId}")
-	public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId) {
+	public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId, HttpServletRequest httpServletRequest) {
 		Long userId = 1L;
-		questionService.deleteQuestion(userId, questionId);
+		questionService.deleteQuestion(questionId, httpServletRequest);
 
 		return ResponseEntity.ok().build();
 	}

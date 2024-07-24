@@ -9,7 +9,7 @@ export async function requestLogIn(
     formData: z.infer<typeof formSchema>
 ) {
 
-  const requestUrl = `${API_URL}/login`;
+  const requestUrl = `${API_URL}/user/login`;
 
   const signUpResponse = await fetch(requestUrl, {
     method: 'POST',
@@ -17,6 +17,7 @@ export async function requestLogIn(
         Accept: 'application/json','Content-Type': 'application/json',
         "Authorization": `Basic ${window.btoa(`${formData.email}:${formData.password}`)}`
       },
+      body: JSON.stringify(formData),
   });
   return signUpResponse;
 }

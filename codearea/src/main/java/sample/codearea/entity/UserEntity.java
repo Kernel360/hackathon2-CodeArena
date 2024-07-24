@@ -31,14 +31,14 @@ public class UserEntity extends TimeTrackableEntity {
 	private String nickname;
 
 	@Column(nullable = false, columnDefinition = "VARCHAR(255)")
-	private String password; // TODO: must be encrypted
+	private String password;
 
 	@OneToMany(mappedBy = "user")
-	private List<QuestionEntity> questions = new ArrayList<>();
+	private List<QuestionEntity> questions = new ArrayList<>();	//TODO : UserMyInfoResponseDto 추가 예정
 
 	@OneToMany(mappedBy = "user")
 	@JsonIgnore
-	private List<AnswerEntity> answers = new ArrayList<>();
+	private List<AnswerEntity> answers = new ArrayList<>();	//TODO : UserMyInfoResponseDto 추가 예정
 
 	@OneToMany(mappedBy = "user")
 	private List<CommentEntity> comments = new ArrayList<>();
@@ -50,8 +50,7 @@ public class UserEntity extends TimeTrackableEntity {
 			name = "USER_QUESTION_SCRAP",
 			joinColumns = {@JoinColumn(name="userId")},
 			inverseJoinColumns = {@JoinColumn(name="questionId")})
-	private List<QuestionEntity> questionScraps = new ArrayList<>();
-
+	private List<QuestionEntity> questionScraps = new ArrayList<>();	//TODO : UserMyInfoResponseDto 추가 예정
 	@Builder
 	private UserEntity(
 			Long id,

@@ -48,8 +48,6 @@ export async function requestQuestionListPaginated(
       target: sort ?? "createdAt" // default to view
     },
   };
-  console.log(requestUrl);
-  console.log(requestPayload);
 
   const questionListReponse = await fetch(requestUrl, {
     method: 'POST',
@@ -69,5 +67,6 @@ export async function requestQuestionListPaginated(
   }
 
   const body: GET_paginationResponseFormat = await questionListReponse.json();
+  
   return body;
 }
