@@ -1,6 +1,8 @@
 package sample.codearea.dto;
 
 import lombok.*;
+import sample.codearea.common.key.UserQuestionCK;
+import sample.codearea.constant.voteStatus;
 
 import java.time.LocalDateTime;
 
@@ -12,19 +14,13 @@ import java.time.LocalDateTime;
 @Builder
 public class QuestionResponseDto {
 
-    private Long questionId;
+    private UserQuestionCK userQuestionCK;
+
     private String userName;
     private LocalDateTime createdAt;
     private Integer views;
     private String title;
     private String content;
+    private voteStatus voteStatus;
 
-    /**
-     * vote 객체 넣어야 함.
-     * {
-     *  내 투표 정보 0/1/2 값
-     *  좋아요 수
-     *  싫어요 수
-     * }
-     */
 }
