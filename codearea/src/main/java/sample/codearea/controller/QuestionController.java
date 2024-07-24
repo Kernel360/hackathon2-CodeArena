@@ -2,24 +2,14 @@ package sample.codearea.controller;
 
 import jakarta.validation.Valid;
 import java.util.Optional;
-import org.hibernate.query.SortDirection;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import sample.codearea.dto.PaginatedQuestionPreviewListRequestDto;
-import sample.codearea.dto.PaginatedQuestionPreviewListResponseDto;
-import sample.codearea.dto.PaginationResponseDto;
+import org.springframework.web.bind.annotation.*;
+import sample.codearea.dto.*;
 import sample.codearea.entity.QuestionEntity;
 import sample.codearea.service.QuestionMapper;
 import sample.codearea.service.QuestionService;
@@ -100,4 +90,39 @@ public class QuestionController {
 
 		return ResponseEntity.ok(responseDto);
 	}
+
+
+
+	@PostMapping("/add")
+	public ResponseEntity<QuestionResponseDto> createQuestion(@RequestBody QuestionRequestDto questionRequestDto) {
+		Long userId = 1L; // 세션으로 변경 필요
+		QuestionResponseDto question = questionService.createQuestion(userId, questionRequestDto);
+
+		return ResponseEntity.ok(question);
+	}
+
+	@GetMapping("/{questionId}")
+	public ResponseEntity<QuestionResponseDto> viewQuestion(@PathVariable Long questionId) {
+		QuestionResponseDto question = questionService.findQuestion(questionId);
+
+		return ResponseEntity.ok(question);
+	}
+
+	@PutMapping("/{questionId}")
+	public ResponseEntity<?> updateQuestion(@PathVariable Long questionId, @RequestBody QuestionRequestDto questionRequestDto) {
+		Long userId = 1L;
+		questionService.updateQuestion(userId, questionId, questionRequestDto);
+
+		return ResponseEntity.ok().build();
+	}
+
+	@DeleteMapping("/{questionId}")
+	public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId) {
+		Long userId = 1L;
+		questionService.deleteQuestion(userId, questionId);
+
+		return ResponseEntity.ok().build();
+	}
+
+
 }

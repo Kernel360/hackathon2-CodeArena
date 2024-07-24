@@ -4,16 +4,15 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import sample.codearea.common.TimeTrackableEntity;
 
 @Entity
 @Table(name = "QUESTION")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuestionEntity extends TimeTrackableEntity {
 

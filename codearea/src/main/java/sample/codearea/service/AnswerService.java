@@ -1,10 +1,10 @@
 package sample.codearea.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import sample.codearea.dto.AnswerRequestDto;
 import sample.codearea.dto.AnswerResponseDto;
-import sample.codearea.dto.AnswerTestDto;
 import sample.codearea.entity.AnswerEntity;
 import sample.codearea.entity.QuestionEntity;
 import sample.codearea.entity.UserEntity;
@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 /**
  * 한 사람당 하나의 답변만 작성할 수 있다.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AnswerService {
@@ -38,8 +39,8 @@ public class AnswerService {
                 .collect(Collectors.toList());
     }
 
-    public AnswerResponseDto save(Long memberId, Long questionId, AnswerRequestDto answerRequestDto) {
-        UserEntity user = userRepository.findById(memberId).get();
+    public AnswerResponseDto save(Long userId, Long questionId, AnswerRequestDto answerRequestDto) {
+        UserEntity user = userRepository.findById(userId).get();
         QuestionEntity question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new IllegalArgumentException("Not found Question"));
 
@@ -50,7 +51,6 @@ public class AnswerService {
                 .content(answerRequestDto.getContent())
                 .build();
 
-
         AnswerEntity save = answerRepository.save(answer);
 
         // entity to response dto
@@ -59,7 +59,7 @@ public class AnswerService {
         return answerResponseDto;
     }
 
-    public void update(Long answerId, AnswerTestDto answerRequestDto) {
+    public void update(Long answerId, AnswerRequestDto answerRequestDto) {
         AnswerEntity answer = answerRepository.findById(answerId).orElseThrow();
 
         answer.setContent(answerRequestDto.getContent());

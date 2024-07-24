@@ -4,17 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import sample.codearea.dto.AnswerRequestDto;
-import sample.codearea.dto.AnswerResponseDto;
-import sample.codearea.dto.AnswerTestDto;
 import sample.codearea.entity.AnswerEntity;
 import sample.codearea.entity.QuestionEntity;
 import sample.codearea.entity.UserEntity;
 import sample.codearea.repository.AnswerRepository;
 import sample.codearea.repository.QuestionRepository;
 import sample.codearea.repository.UserRepository;
-import sample.codearea.service.AnswerService;
-import sample.codearea.service.UserService;
 
 @Slf4j
 @RequiredArgsConstructor
