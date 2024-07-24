@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
 import sample.codearea.common.key.UserQuestionCK;
 import sample.codearea.constant.SessionConst;
 import sample.codearea.constant.voteStatus;
@@ -17,6 +19,7 @@ import sample.codearea.entity.UserEntity;
 import sample.codearea.repository.QuestionRepository;
 import sample.codearea.repository.UserRepository;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class QuestionService {
@@ -136,6 +139,7 @@ public class QuestionService {
 	private static Long getLoginId(HttpServletRequest httpServletRequest) {
 		HttpSession session = httpServletRequest.getSession();
 		Long loginId = (Long) session.getAttribute(SessionConst.LOGIN_USER);
+		log.info("loginId: " + loginId);
 		return loginId;
 	}
 }
