@@ -25,7 +25,7 @@ public class QuestionService {
 	private final QuestionRepository questionRepository;
 	private final QuestionConverter questionConverter;
 
-	public QuestionResponseDto findQuestion(Long questionId, voteStatus voteStatus, HttpServletRequest httpServletRequest) {
+	public QuestionResponseDto findQuestion(Long questionId, HttpServletRequest httpServletRequest) {
 		HttpSession session = httpServletRequest.getSession();
 		Object loginUserId = session.getAttribute(SessionConst.LOGIN_USER);
 		UserQuestionCK userQuestionCK = new UserQuestionCK((Long) loginUserId, questionId);
@@ -42,7 +42,7 @@ public class QuestionService {
 				.views(question.getViews())
 				.title(question.getTitle())
 				.content(question.getContent())
-				.voteStatus(voteStatus)
+				.voteStatus(voteStatus.VOTE_STATUS_NOT_VOTED)
                 .build();
 
 
@@ -104,7 +104,7 @@ public class QuestionService {
 
 		QuestionEntity saved = questionRepository.save(question);
 
-		return questionConverter.toDto(saved, userId);
+		return questionConverter.toDto(saved, loginId);
 
 	}
 
