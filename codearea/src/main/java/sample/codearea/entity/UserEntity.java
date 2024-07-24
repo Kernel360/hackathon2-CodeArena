@@ -6,10 +6,8 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 import sample.codearea.common.TimeTrackableEntity;
 
 import javax.xml.stream.events.Comment;
@@ -17,6 +15,7 @@ import javax.xml.stream.events.Comment;
 @Entity
 @Table(name = "_USER") // TODO: h2에서 user가 예약 키워드라 임시로 설정하였다.
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserEntity extends TimeTrackableEntity {
 

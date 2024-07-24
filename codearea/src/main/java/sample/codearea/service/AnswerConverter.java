@@ -10,6 +10,7 @@ public class AnswerConverter {
 
     public AnswerResponseDto toDto(AnswerEntity entity) {
         return AnswerResponseDto.builder()
+                .answerId(entity.getId())
                 .nickname(entity.getUser().getNickname())
                 .modifiedAt(entity.getUpdatedAt())
                 .content(entity.getContent())
