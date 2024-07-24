@@ -118,7 +118,6 @@ public class QuestionController {
 
 	@DeleteMapping("/{questionId}")
 	public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId, HttpServletRequest httpServletRequest) {
-		Long userId = 1L;
 		questionService.deleteQuestion(questionId, httpServletRequest);
 
 		return ResponseEntity.ok().build();

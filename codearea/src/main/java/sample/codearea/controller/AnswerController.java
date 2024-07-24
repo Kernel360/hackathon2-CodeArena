@@ -1,5 +1,6 @@
 package sample.codearea.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,21 +27,20 @@ public class AnswerController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@PathVariable Long questionId, @Validated @RequestBody AnswerRequestDto answerRequestDto) {
-        Long memberId = 1L;
-        AnswerResponseDto responseDto = answerService.save(questionId, memberId, answerRequestDto);
+    public ResponseEntity<?> save(@PathVariable Long questionId, @Validated @RequestBody AnswerRequestDto answerRequestDto, HttpServletRequest httpServletRequest) {
+        AnswerResponseDto responseDto = answerService.save(questionId, answerRequestDto, httpServletRequest);
         return ResponseEntity.ok(responseDto);
     }
 
     @PutMapping("/{answerId}")
-    public ResponseEntity<?> update(@PathVariable Long answerId, @PathVariable Long questionId, @RequestBody AnswerRequestDto answerRequestDto) {
-        answerService.update(answerId, answerRequestDto);
+    public ResponseEntity<?> update(@PathVariable Long answerId, @RequestBody AnswerRequestDto answerRequestDto, HttpServletRequest httpServletRequest) {
+        answerService.update(answerId, answerRequestDto, httpServletRequest);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{answerId}")
-    public ResponseEntity<?> delete(@PathVariable Long answerId) {
-        answerService.delete(answerId);
+    public ResponseEntity<?> delete(@PathVariable Long answerId, HttpServletRequest httpServletRequest) {
+        answerService.delete(answerId, httpServletRequest);
         return ResponseEntity.ok().build();
     }
 

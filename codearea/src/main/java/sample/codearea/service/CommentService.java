@@ -1,9 +1,12 @@
 package sample.codearea.service;
 
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import sample.codearea.constant.SessionConst;
 import sample.codearea.dto.CommentRequestDto;
 import sample.codearea.dto.CommentResponseDto;
 import sample.codearea.entity.AnswerEntity;
@@ -44,8 +47,9 @@ public class CommentService {
     }
 
 
-    public void save(Long userId, Long answerId, CommentRequestDto commentRequestDto) {
-        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Not found Question"));
+    public void save(Long answerId, CommentRequestDto commentRequestDto, HttpServletRequest httpServletRequest) {
+        Long loginId = getLoginId(httpServletRequest);
+        UserEntity user = userRepository.findById(loginId).orElseThrow(() -> new IllegalArgumentException("Not found Question"));
         AnswerEntity answer = answerRepository.findById(answerId).orElseThrow(()-> new IllegalArgumentException("Not found Question"));
 
         CommentEntity comment = CommentEntity.builder()
@@ -53,22 +57,42 @@ public class CommentService {
                 .answer(answer)
                 .content(commentRequestDto.getContent())
                 .build();
-        CommentEntity savedComment = commentRepository.save(comment);
 
-        CommentConverter.toDto(savedComment);
+        if(loginId == comment.getUser().getId()){
+            CommentEntity savedComment = commentRepository.save(comment);
+            CommentConverter.toDto(savedComment); // 아마 response 반환할 때 쓰려고 했는듯
+            return;
+        }
+        throw new IllegalArgumentException("허가되지 않은 사용자입니다.");
     }
 
-    public void update(Long commentId, CommentRequestDto commentRequestDto) {
+    public void update(Long commentId, CommentRequestDto commentRequestDto, HttpServletRequest httpServletRequest) {
+        Long loginId = getLoginId(httpServletRequest);
         CommentEntity comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("not found comment"));
 
-        comment.setContent(commentRequestDto.getContent());
-        commentRepository.save(comment);
+        if(loginId == comment.getUser().getId()){
+            comment.setContent(commentRequestDto.getContent());
+            commentRepository.save(comment);
+            return;
+        }
+        throw new IllegalArgumentException("허가되지 않은 사용자입니다.");
     }
 
-    public void delete(Long commentId) {
+    public void delete(Long commentId, HttpServletRequest httpServletRequest) {
+        Long loginId = getLoginId(httpServletRequest);
         CommentEntity comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("not found comment"));
-        commentRepository.delete(comment);
+
+        if(loginId == comment.getUser().getId()){
+            commentRepository.delete(comment);
+            return;
+        }
+        throw new IllegalArgumentException("허가되지 않은 사용자입니다.");
     }
 
+    private static Long getLoginId(HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession();
+        Long loginId = (Long) session.getAttribute(SessionConst.LOGIN_USER);
+        return loginId;
+    }
 
 }
