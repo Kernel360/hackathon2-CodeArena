@@ -47,7 +47,6 @@ public class UserSignupRequestDto {
 				.email(userSignupRequestDto.getEmail())
 				.nickname(userSignupRequestDto.getNickname())
 				.password(userSignupRequestDto.getPassword())
-
 				.build();
 
 	}
