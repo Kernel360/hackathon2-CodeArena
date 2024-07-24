@@ -33,7 +33,7 @@ public class QuestionController {
 	//       2. 만약 검색 조건이 2개 이상 들어오면, 예외를 발생
 
 	@PostMapping("")
-	public ResponseEntity<?> getQuestions(
+	public ResponseEntity<PaginatedQuestionPreviewListResponseDto> getQuestions(
 		@RequestParam(value = "category") Optional<String> searchCategory,
 		@RequestParam(value = "search") Optional<String> searchString,
 		@RequestBody @Valid PaginatedQuestionPreviewListRequestDto requestDto
