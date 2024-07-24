@@ -4,16 +4,15 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import sample.codearea.common.TimeTrackableEntity;
 
 @Entity
 @Table(name = "QUESTION")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuestionEntity extends TimeTrackableEntity {
 
@@ -47,7 +46,7 @@ public class QuestionEntity extends TimeTrackableEntity {
 	@ColumnDefault("0")
 	private Integer hates = 0;
 
-	@OneToMany(mappedBy = "question")
+	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
 	private List<AnswerEntity> answers = new ArrayList<>();
 
 	/**

@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import sample.codearea.repository.AnswerRepository;
+import sample.codearea.repository.CommentRepository;
 import sample.codearea.repository.QuestionRepository;
 import sample.codearea.repository.UserRepository;
 import sample.codearea.service.AnswerService;
@@ -18,8 +19,8 @@ public class CodeareaApplication {
 	}
 
 	@Bean
-	TestDataInit testDataInit(UserRepository userRepository, AnswerRepository answerRepository, QuestionRepository questionRepository){
-		return new TestDataInit(userRepository, answerRepository, questionRepository);
+	TestDataInit testDataInit(UserRepository userRepository, QuestionRepository questionRepository, AnswerRepository answerRepository, CommentRepository commentRepository){
+		return new TestDataInit(userRepository, questionRepository, answerRepository, commentRepository);
 	}
 
 }

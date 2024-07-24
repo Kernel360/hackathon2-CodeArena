@@ -48,17 +48,17 @@ public class UserEntity extends TimeTrackableEntity {
 	// 사용자 질문 투표 Entity는 위 링크 참고 바랍니다.
 	@ManyToMany
 	@JoinTable(
-		name = "USER_QUESTION_SCRAP",
-		joinColumns = {@JoinColumn(name="userId")},
-		inverseJoinColumns = {@JoinColumn(name="questionId")})
+			name = "USER_QUESTION_SCRAP",
+			joinColumns = {@JoinColumn(name="userId")},
+			inverseJoinColumns = {@JoinColumn(name="questionId")})
 	private List<QuestionEntity> questionScraps = new ArrayList<>();
 
 	@Builder
 	private UserEntity(
-		Long id,
-		String email,
-		String nickname,
-		String password
+			Long id,
+			String email,
+			String nickname,
+			String password
 	) {
 		this.id = id;
 		this.email = email;

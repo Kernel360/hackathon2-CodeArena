@@ -1,19 +1,30 @@
 package sample.codearea.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import sample.codearea.dto.QuestionRequestDto;
+import sample.codearea.dto.QuestionResponseDto;
 import sample.codearea.entity.QuestionEntity;
+import sample.codearea.entity.UserEntity;
 import sample.codearea.repository.QuestionRepository;
+import sample.codearea.repository.UserRepository;
 
 @Service
+@RequiredArgsConstructor
 public class QuestionService {
 
+	private final UserRepository userRepository;
 	private final QuestionRepository questionRepository;
+	private final QuestionConverter questionConverter;
 
-	public QuestionService(QuestionRepository questionRepository) {
-		this.questionRepository = questionRepository;
+	public QuestionResponseDto findQuestion(Long questionId) {
+		QuestionEntity question = questionRepository.findById(questionId)
+				.orElseThrow(() -> new IllegalArgumentException("Not Found Question"));
+
+		return questionConverter.toDto(question);
 	}
 
 	public Page<QuestionEntity> getQuestionsWithPagingAndSorting(
@@ -58,4 +69,53 @@ public class QuestionService {
 				throw new IllegalArgumentException("Invalid search category: " + searchCategory);
 		}
 	}
+
+	public QuestionResponseDto createQuestion(Long userId, QuestionRequestDto questionRequestDto) {
+		UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User Not Found"));
+
+		QuestionEntity question = QuestionEntity.builder()
+				.user(user)
+				.title(questionRequestDto.getTitle())
+				.content(questionRequestDto.getContent())
+				.build();
+
+		QuestionEntity saved = questionRepository.save(question);
+
+		QuestionResponseDto responseDto = questionConverter.toDto(saved);
+
+		return responseDto;
+	}
+
+	public void updateQuestion(Long userId, Long questionId, QuestionRequestDto questionRequestDto) {
+		UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Not Found User"));
+		QuestionEntity question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("Not Found Question"));
+
+		if(user == question.getUser()){
+			question.setTitle(questionRequestDto.getTitle());
+			question.setContent(questionRequestDto.getContent());
+			questionRepository.save(question);
+		}
+		else {
+			throw new IllegalArgumentException("허가되지 않은 사용자입니다.");
+		}
+
+	}
+
+	public void deleteQuestion(Long userId, Long questionId) {
+		UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Not Found User"));
+		QuestionEntity question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("Not Found Question"));
+
+		if(user == question.getUser()){
+			questionRepository.delete(question);
+
+			/**
+			 * 질문 삭제 시 답변(Answer), 댓글(Comment)까지 삭제 되어야 함.
+			 */
+		}
+		else {
+			throw new IllegalArgumentException("허가되지 않은 사용자입니다.");
+		}
+	}
+
+
 }

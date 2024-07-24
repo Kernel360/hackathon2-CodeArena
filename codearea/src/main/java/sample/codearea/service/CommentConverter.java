@@ -10,6 +10,7 @@ public class CommentConverter {
 
     public static CommentResponseDto toDto(CommentEntity entity) {
         return CommentResponseDto.builder()
+                .commentId(entity.getId())
                 .nickname(entity.getUser().getNickname())
                 .modifiedAt(entity.getUpdatedAt())
                 .content(entity.getContent())
