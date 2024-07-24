@@ -46,6 +46,6 @@ public class AnswerEntity extends TimeTrackableEntity {
     private Integer hates;
 
     @Builder.Default
-    @OneToMany(mappedBy = "answer")
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
     private List<CommentEntity> comments = new ArrayList<>();
 }

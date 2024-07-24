@@ -46,7 +46,7 @@ public class QuestionEntity extends TimeTrackableEntity {
 	@ColumnDefault("0")
 	private Integer hates = 0;
 
-	@OneToMany(mappedBy = "question")
+	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
 	private List<AnswerEntity> answers = new ArrayList<>();
 
 	/**
