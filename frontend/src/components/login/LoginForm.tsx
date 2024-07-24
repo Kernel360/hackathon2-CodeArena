@@ -41,12 +41,14 @@ export default function LoginForm() {
         (async () => {
             const response = await requestLogIn(values); // 로그인 Request 전송
             const responseBody = await response.json();
-            console.log(responseBody)
             alert(responseBody.email +"님 환영합니다.");
-            
+            console.log(responseBody)
             if (response.ok) {
                 // 로그인 정보를 세션에 저장함.
-                sessionStorage.setItem("user", JSON.stringify({email : responseBody.email}));
+                sessionStorage.setItem("user", JSON.stringify({
+                    userId : responseBody.userId, 
+                    email : responseBody.email, 
+                    nickname : responseBody.nickname}));
                 window.location.href = "/";
             }
         })(/* IIFE */);
