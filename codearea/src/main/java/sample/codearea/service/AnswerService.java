@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import sample.codearea.constant.SessionConst;
+import sample.codearea.constant.voteStatus;
 import sample.codearea.dto.AnswerRequestDto;
 import sample.codearea.dto.AnswerResponseDto;
 import sample.codearea.entity.AnswerEntity;
@@ -15,6 +16,7 @@ import sample.codearea.repository.AnswerRepository;
 import sample.codearea.repository.QuestionRepository;
 import sample.codearea.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,9 +39,13 @@ public class AnswerService {
     }
 
     public List<AnswerResponseDto> findAll(Long questionId) {
-        return answerRepository.findByQuestionId(questionId).stream()
-                .map(answerConverter::toDto)
-                .collect(Collectors.toList());
+        List<AnswerEntity> byQuestionId = answerRepository.findByQuestionId(questionId);
+
+        List<AnswerResponseDto> answerResponseDtoList = new ArrayList<>();
+        for (AnswerEntity answerEntity : byQuestionId) {
+            answerResponseDtoList.add(AnswerConverter.toDto(answerEntity, voteStatus.VOTE_STATUS_NOT_VOTED, false));
+        }
+        return answerResponseDtoList;
     }
 
     public AnswerResponseDto save(Long questionId, AnswerRequestDto answerRequestDto, HttpServletRequest httpServletRequest) {
@@ -58,7 +64,7 @@ public class AnswerService {
         AnswerEntity save = answerRepository.save(answer);
 
         // entity to response dto
-        AnswerResponseDto answerResponseDto = answerConverter.toDto(save);
+        AnswerResponseDto answerResponseDto = answerConverter.toDto(save, voteStatus.VOTE_STATUS_NOT_VOTED, false);
 
         return answerResponseDto;
     }
