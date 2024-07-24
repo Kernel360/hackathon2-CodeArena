@@ -124,6 +124,28 @@ public class UserService {
         }
     }
 
+    public UserMyInfoResponseDto getUserInfo(Long userId, HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession();
+        Object loginUserId = session.getAttribute(SessionConst.LOGIN_USER);
+        UserMyInfoResponseDto userMyInfoResponseDto = new UserMyInfoResponseDto();
+
+        if(loginUserId == userId){
+            UserEntity loginedUserEntity = getUserById(userId).orElseThrow(() -> new IllegalArgumentException("user not found"));
+
+            userMyInfoResponseDto.setEmail(loginedUserEntity.getEmail());
+            userMyInfoResponseDto.setNickname(loginedUserEntity.getNickname());
+
+            return userMyInfoResponseDto;
+        }else{
+            return null;
+        }
+
+
+
+    }
+
+
+    // method for service
     public Optional<UserEntity> getUserByNickname(String nickname) {
         return userRepository.findUserEntityByNickname(nickname);
     }
@@ -131,4 +153,11 @@ public class UserService {
     public Optional<UserEntity> getUserByEmail(String email) {
         return userRepository.findUserEntityByEmail(email);
     }
+
+    public Optional<UserEntity> getUserById(Long userId) {
+        return userRepository.findById(userId);
+    }
+
+
+
 }
