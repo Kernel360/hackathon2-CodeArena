@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 public class QuestionResponseDto {
 
+    private Long questionId;
     private String userName;
     private LocalDateTime createdAt;
     private Integer views;

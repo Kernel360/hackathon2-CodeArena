@@ -30,8 +30,8 @@ public class CommentService {
     }
 
     public List<CommentResponseDto> findByAnswerId(Long answerId) {
-        AnswerEntity answerEntity = answerRepository.findById(answerId).orElse(null);
-       return commentRepository.findByAnswer(answerEntity).stream()
+        AnswerEntity answerEntity = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("not found answer"));
+        return commentRepository.findByAnswer(answerEntity).stream()
             .map(CommentConverter::toDto)
             .collect(Collectors.toList());
     }
@@ -61,7 +61,7 @@ public class CommentService {
     }
 
     public void update(Long commentId, CommentRequestDto commentRequestDto) {
-        CommentEntity comment = commentRepository.findById(commentId).orElseThrow();
+        CommentEntity comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("not found comment"));
 
         comment.setContent(commentRequestDto.getContent());
         commentRepository.save(comment);

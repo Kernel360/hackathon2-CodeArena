@@ -9,6 +9,7 @@ public class QuestionConverter {
 
     public QuestionResponseDto toDto(QuestionEntity questionEntity) {
         return QuestionResponseDto.builder()
+                .questionId(questionEntity.getId())
                 .userName(questionEntity.getUser().getNickname())
                 .createdAt(questionEntity.getCreatedAt())
                 .views(questionEntity.getViews())

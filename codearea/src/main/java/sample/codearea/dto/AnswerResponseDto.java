@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 public class AnswerResponseDto {
 
+    private Long answerId;
     private String nickname;
     private LocalDateTime modifiedAt;
     private String content;

@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import sample.codearea.entity.AnswerEntity;
+import sample.codearea.entity.CommentEntity;
 import sample.codearea.entity.QuestionEntity;
 import sample.codearea.entity.UserEntity;
 import sample.codearea.repository.AnswerRepository;
+import sample.codearea.repository.CommentRepository;
 import sample.codearea.repository.QuestionRepository;
 import sample.codearea.repository.UserRepository;
 
@@ -16,8 +18,9 @@ import sample.codearea.repository.UserRepository;
 public class TestDataInit {
 
     private final UserRepository userRepository;
-    private final AnswerRepository answerRepository;
     private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
+    private final CommentRepository commentRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     public void initData() {
@@ -80,32 +83,40 @@ public class TestDataInit {
             questionRepository.save(question);
         }
 
-        AnswerEntity answer = AnswerEntity.builder()
-                .question(questionRepository.findById(1L).orElseThrow())
-                .user(user1)
-                .content("이거는 무슨 의미인가요?")
-                .build();
+        for(int i = 1; i <= 5; i++) {
+            AnswerEntity answer1 = AnswerEntity.builder()
+                    .question(questionRepository.findById(1L).orElseThrow())
+                    .user(user1)
+                    .content("이거는 무슨 의미인가요? : " + i)
+                    .build();
+            answerRepository.save(answer1);
+        }
 
-        answerRepository.save(answer);
+        for(int i = 1; i <= 5; i++) {
+            AnswerEntity answer2 = AnswerEntity.builder()
+                    .question(questionRepository.findById(2L).orElseThrow())
+                    .user(user1)
+                    .content("두번째 질문에 대한 답변 : " + i)
+                    .build();
+            answerRepository.save(answer2);
+        }
 
-
-//        AnswerRequestDto answer1 = AnswerRequestDto.builder()
-//                .userName(user1.getNickname())
-//                .content("test")
+//        CommentEntity comment1 = CommentEntity.builder()
+//                .user(user2)
+//                .answer(commentRepository.findById(1L).get().getAnswer())
+//                .content("첫 번째 답변에 대한 댓글")
+//                .build();
+//        commentRepository.save(comment1);
+//
+//        CommentEntity comment2 = CommentEntity.builder()
+//                .user(user2)
+//                .answer(commentRepository.findById(1L).get().getAnswer())
+//                .content("두 번째 답변에 대한 댓글")
 //                .build();
 //
-//        AnswerRequestDto answer2 = AnswerRequestDto.builder()
-//                .userName(user2.getNickname())
-//                .content("안녕")
-//                .build();
+//        commentRepository.save(comment2);
 
 
-//        answerService.save(1L, 1L, answer1);
-//        answerService.save(1L, 1L, answer2);
-//        answerService.save(1L, 1L, answer1);
-//        answerService.save(1L, 1L, answer2);
-//        answerService.update(responseDto, answer2);
-//        answerService.delete(2L);
     }
 
 }
