@@ -10,7 +10,8 @@ public class QuestionConverter {
 
     public QuestionResponseDto toDto(QuestionEntity questionEntity, Long userId) {
         return QuestionResponseDto.builder()
-                .userQuestionCK(new UserQuestionCK(userId, questionEntity.getId()))
+                .userId(userId)
+                .questionId(questionEntity.getId())
                 .userName(questionEntity.getUser().getNickname())
                 .createdAt(questionEntity.getCreatedAt())
                 .views(questionEntity.getViews())

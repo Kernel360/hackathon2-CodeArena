@@ -16,9 +16,9 @@ public abstract class TimeTrackableEntity {
 
 	@CreatedDate
 	@Column(name = "createdAt", updatable = false, nullable = false)
-	private LocalDateTime createdAt;
+	protected LocalDateTime createdAt;
 
 	@LastModifiedDate
 	@Column(name = "modifiedAt", nullable = false)
-	private LocalDateTime updatedAt;
+	protected LocalDateTime updatedAt;
 }

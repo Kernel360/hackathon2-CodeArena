@@ -36,8 +36,8 @@ public class AnswerService {
         return answerRepository.findById(answerId);
     }
 
-    public List<AnswerResponseDto> findAll() {
-        return answerRepository.findAll().stream()
+    public List<AnswerResponseDto> findAll(Long questionId) {
+        return answerRepository.findByQuestionId(questionId).stream()
                 .map(answerConverter::toDto)
                 .collect(Collectors.toList());
     }
