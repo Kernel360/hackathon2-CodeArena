@@ -11,6 +11,7 @@ return  QuestionResponse;
 }
 
 export const createRequestQuestion = async (newQuestion: any) =>{
+  console.log(newQuestion)
   const response = await fetch(`${API_URL}/questions/add`, {
     method: 'POST',
     credentials : 'include',
@@ -38,3 +39,14 @@ export const updateRequestQuestion = async (newQuestion: any, questionId:number)
 }
 
 
+
+export const deleteRequestQuestion = async (questionId:number) =>{
+  const response = await fetch(`${API_URL}/questions/${questionId}`, {
+    method: 'DELETE',
+    credentials : 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response;
+}

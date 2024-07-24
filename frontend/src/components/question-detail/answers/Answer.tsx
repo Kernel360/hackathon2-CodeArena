@@ -4,19 +4,15 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AnswerItem } from "./AnswerItem";
 
-export const Answer = () =>{
+export const Answer = ({answer,deleteRequestAnswer}:{answer:AnswerType[],deleteRequestAnswer:any}) =>{
     const location = useLocation();
     const questionId = location.state?.question?.questionId;
-    const [answer, setAnswer] = useState<AnswerType[]>([]);
-    console.log(answer)
-    useEffect(()=>{
-        requestAnswer(questionId).then((res)=> res.json()).then((d)=> setAnswer(d))
-    },[])
+    
     return (
         <>
         {answer.map((data, index) =>
             <div key={index}>
-                <AnswerItem answerItem={data} key={index}/>
+                <AnswerItem answerItem={data} key={index} deleteRequestAnswer={deleteRequestAnswer}/>
             </div>
         )}
         </>

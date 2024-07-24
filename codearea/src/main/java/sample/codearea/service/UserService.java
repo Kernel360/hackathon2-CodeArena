@@ -109,14 +109,14 @@ public class UserService {
 
         // user info check by email and check password
         if(userEntity != null && bCryptPasswordEncoder.matches(data.getPassword(), userEntity.getPassword())){
-            System.out.println( userEntity.getId());
+
             session.setAttribute(SessionConst.LOGIN_USER, userEntity.getId());
 
             UserLoginResponseDto userLoginResponseDto = new UserLoginResponseDto();
             userLoginResponseDto.setId(userEntity.getId());
             userLoginResponseDto.setNickname(userEntity.getNickname());
             userLoginResponseDto.setEmail(userEntity.getEmail());
-
+            log.info("userService : {}", session.getAttribute(SessionConst.LOGIN_USER));
             return ResponseEntity.status(HttpStatus.OK)
                     .body(userLoginResponseDto);
         }else {
