@@ -1,15 +1,16 @@
 package sample.codearea.service;
 
 import org.springframework.stereotype.Service;
+import sample.codearea.common.key.UserQuestionCK;
 import sample.codearea.dto.QuestionResponseDto;
 import sample.codearea.entity.QuestionEntity;
 
 @Service
 public class QuestionConverter {
 
-    public QuestionResponseDto toDto(QuestionEntity questionEntity) {
+    public QuestionResponseDto toDto(QuestionEntity questionEntity, Long userId) {
         return QuestionResponseDto.builder()
-                .questionId(questionEntity.getId())
+                .userQuestionCK(new UserQuestionCK(userId, questionEntity.getId()))
                 .userName(questionEntity.getUser().getNickname())
                 .createdAt(questionEntity.getCreatedAt())
                 .views(questionEntity.getViews())

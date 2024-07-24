@@ -5,6 +5,7 @@ import SignUpCard from "./components/signup/SignUpCard";
 import { QuestionsPage } from "./components/QuestionsPage";
 import LogoLogin from "./components/header";
 import {QuestionDetail} from "./components/question-detail/QuestionDetail";
+import { AuthProvider } from "./context/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
 
 function App() {
     return (
+      <AuthProvider>
       <div className="App">
         <header className="App-header">
           <LogoLogin/>
@@ -62,6 +64,7 @@ function App() {
           </div>
         </header>
       </div>
+      </AuthProvider>
     );
   }
 export default App;

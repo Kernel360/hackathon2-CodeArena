@@ -2,12 +2,10 @@ package sample.codearea.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sample.codearea.dto.UserLoginRequestDto;
 import sample.codearea.dto.UserMyInfoResponseDto;
@@ -51,11 +49,10 @@ public class UserController {
 		return ;
 	}
 
-	@GetMapping("/me")
-	public ResponseEntity<UserMyInfoResponseDto> getMyInfo() {
-		// 1. check if user session is valid.
-		// 2. if valid, return user info
-		// 3. else, delete session_id from http header + error response
-		return ResponseEntity.ok().build();
+	@GetMapping("/my-page/{user-id}")
+	public ResponseEntity<UserMyInfoResponseDto> myPage(@PathVariable("user-id") Long userId, HttpServletRequest httpServletRequest) {
+
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(userService.getUserInfo(userId, httpServletRequest));
 	}
 }

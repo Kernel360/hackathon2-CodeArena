@@ -46,8 +46,20 @@ export default function SignUpForm() {
 
         // TODO: send to server
         (async () => {
-            await requestSignUp(values); // 로그인 Request 전송
+            const response = await requestSignUp(values); // 로그인 Request 전송
+            const responseBody = await response.json();
+            alert(responseBody.email +"님 환영합니다.");
+            
+            if (response.ok) {
+                // 로그인 정보를 세션에 저장함.
+                sessionStorage.setItem("user", JSON.stringify({
+                    userId : responseBody.userId, 
+                    email : responseBody.email, 
+                    nickname : responseBody.nickname}));
+                window.location.href = "/";
+            }
         })(/* IIFE */);
+        
     }
 
     return (

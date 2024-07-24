@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sample.codearea.constant.voteStatus;
 import sample.codearea.dto.*;
 import sample.codearea.entity.QuestionEntity;
 import sample.codearea.service.QuestionMapper;
@@ -103,8 +104,8 @@ public class QuestionController {
 	}
 
 	@GetMapping("/{questionId}")
-	public ResponseEntity<QuestionResponseDto> viewQuestion(@PathVariable Long questionId) {
-		QuestionResponseDto question = questionService.findQuestion(questionId);
+	public ResponseEntity<QuestionResponseDto> viewQuestion(@PathVariable Long questionId, @RequestBody voteStatus voteStatus, HttpServletRequest httpServletRequest) {
+		QuestionResponseDto question = questionService.findQuestion(questionId, voteStatus, httpServletRequest);
 
 		return ResponseEntity.ok(question);
 	}

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
-import { User } from '@/types/User';
+import { useAuth } from '@/context/AuthContext';
 
 const LogoLogin: React.FC = () => {
-    const [user, setUser] = useState<User | undefined>(undefined);
+    const { user, logout } = useAuth();
+
 
     const loginHandler = () => {
         window.location.href = "/sign-in"
@@ -14,24 +15,9 @@ const LogoLogin: React.FC = () => {
     };
 
     const logoutHandler = () => {
-        sessionStorage.removeItem('user');
-        setUser(undefined); // 로그아웃 후 사용자 상태를 undefined로 설정
+        logout();
     };
 
-    useEffect(() => {
-        const sessionUser = sessionStorage.getItem('user');
-        if (sessionUser) {
-            try {
-                const parsedUser = JSON.parse(sessionUser) as User;
-                setUser(parsedUser);
-            } catch (error) {
-                console.error('Failed to parse user from sessionStorage', error);
-                setUser(undefined);
-            }
-        } else {
-            setUser(undefined);
-        }
-    }, []);
 
     return (
         <div className='flex justify-evenly items-center'>
@@ -41,7 +27,8 @@ const LogoLogin: React.FC = () => {
             </div>
             <div className='flex'>
                 {user ? (
-                    <div>
+                    <div className='flex items-center '>
+                        <div className='mr-10'>{user.nickname}님 환영합니다.</div>
                         <Button onClick={logoutHandler}>로그아웃</Button>
                     </div>
                 ) : (

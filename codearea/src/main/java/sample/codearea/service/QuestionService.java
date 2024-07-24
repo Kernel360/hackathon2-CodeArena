@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import sample.codearea.common.key.UserQuestionCK;
 import sample.codearea.constant.SessionConst;
+import sample.codearea.constant.voteStatus;
 import sample.codearea.dto.QuestionRequestDto;
 import sample.codearea.dto.QuestionResponseDto;
 import sample.codearea.entity.QuestionEntity;
@@ -23,11 +25,28 @@ public class QuestionService {
 	private final QuestionRepository questionRepository;
 	private final QuestionConverter questionConverter;
 
-	public QuestionResponseDto findQuestion(Long questionId) {
+	public QuestionResponseDto findQuestion(Long questionId, voteStatus voteStatus, HttpServletRequest httpServletRequest) {
+		HttpSession session = httpServletRequest.getSession();
+		Object loginUserId = session.getAttribute(SessionConst.LOGIN_USER);
+		UserQuestionCK userQuestionCK = new UserQuestionCK((Long) loginUserId, questionId);
+
 		QuestionEntity question = questionRepository.findById(questionId)
 				.orElseThrow(() -> new IllegalArgumentException("Not Found Question"));
+		UserEntity loginedUser = userRepository.findById((Long) loginUserId)
+				.orElseThrow(() -> new IllegalArgumentException("Not Found User"));
 
-		return questionConverter.toDto(question);
+		QuestionResponseDto questionResponseDto;
+        questionResponseDto = new QuestionResponseDto().builder()
+				.userQuestionCK(userQuestionCK)
+				.userName(loginedUser.getNickname())
+				.views(question.getViews())
+				.title(question.getTitle())
+				.content(question.getContent())
+				.voteStatus(voteStatus)
+                .build();
+
+
+		return questionResponseDto;
 	}
 
 	public Page<QuestionEntity> getQuestionsWithPagingAndSorting(
@@ -85,9 +104,8 @@ public class QuestionService {
 
 		QuestionEntity saved = questionRepository.save(question);
 
-		QuestionResponseDto responseDto = questionConverter.toDto(saved);
+		return questionConverter.toDto(saved, userId);
 
-		return responseDto;
 	}
 
 	public void updateQuestion(Long questionId, QuestionRequestDto questionRequestDto, HttpServletRequest httpServletRequest) {

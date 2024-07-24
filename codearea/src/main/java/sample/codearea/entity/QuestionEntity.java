@@ -67,8 +67,8 @@ public class QuestionEntity extends TimeTrackableEntity {
 		this.user = user;
 		this.title = title;
 		this.content = content;
-		this.views = views;
-		this.likes = likes;
-		this.hates = hates;
+		this.views = (views != null) ? views : 0;
+		this.likes = (likes != null) ? likes : 0;
+		this.hates = (hates != null) ? hates : 0;
 	}
 }
