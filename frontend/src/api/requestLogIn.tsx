@@ -13,9 +13,10 @@ export async function requestLogIn(
 
   const signUpResponse = await fetch(requestUrl, {
     method: 'POST',
+    credentials : 'include',
     headers: {
         Accept: 'application/json','Content-Type': 'application/json',
-        "Authorization": `Basic ${window.btoa(`${formData.email}:${formData.password}`)}`
+        // "Authorization": `Basic ${window.btoa(`${formData.email}:${formData.password}`)}`
       },
       body: JSON.stringify(formData),
   });

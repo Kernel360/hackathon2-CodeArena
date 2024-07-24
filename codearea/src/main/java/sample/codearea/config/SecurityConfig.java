@@ -28,12 +28,7 @@ public class SecurityConfig {
     public static BCryptPasswordEncoder bCryptPasswordEncoder() {   // for hash encrypt
         return new BCryptPasswordEncoder();
     }
-    //
-    // @Bean
-    // public WebSecurityCustomizer webSecurityCustomizer() {  // for ignore the confirmation about static resources
-    //     return (web) -> web.ignoring()
-    //             .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-    // }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -53,6 +48,18 @@ public class SecurityConfig {
                 )
                 .logout(LogoutConfigurer::permitAll);
         return http.build();
+    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080","http://localhost:8081"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 }

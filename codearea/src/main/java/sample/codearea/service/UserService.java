@@ -94,9 +94,11 @@ public class UserService {
         var data = userLoginRequestDto;
 
         UserEntity userEntity = getUserByEmail(data.getEmail()).orElseThrow(() -> new IllegalArgumentException("user not found"));
-        // TODO: 로그인 성공시 id, email, nickname 리턴하도록 수정
+        // // TODO: 로그인 성공시 id, email, nickname 리턴하도록 수정
         HttpSession session = httpServletRequest.getSession();
         Object loginUserId = session.getAttribute(SessionConst.LOGIN_USER);
+
+
 
         // session check and compare if login request email and email saved on session are same
         if(loginUserId != null && data.getEmail().equals(userEntity.getEmail())){
@@ -107,6 +109,7 @@ public class UserService {
 
         // user info check by email and check password
         if(userEntity != null && bCryptPasswordEncoder.matches(data.getPassword(), userEntity.getPassword())){
+            System.out.println( userEntity.getId());
             session.setAttribute(SessionConst.LOGIN_USER, userEntity.getId());
 
             UserLoginResponseDto userLoginResponseDto = new UserLoginResponseDto();

@@ -30,6 +30,7 @@ export async function requestSignUp(
  
   const signUpResponse = await fetch(requestUrl, {
     method: 'POST',
+    credentials : 'include',
     headers: {
       'Content-Type': 'application/json',
     },
