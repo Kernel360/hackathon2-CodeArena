@@ -22,8 +22,10 @@ public class AnswerController {
     private final AnswerService answerService;
 
     @GetMapping
-    public List<AnswerResponseDto> list() {
-        return answerService.findAll();
+    public List<AnswerResponseDto> list(
+        @PathVariable Long questionId
+    ) {
+        return answerService.findAll(questionId);
     }
 
     @PostMapping
