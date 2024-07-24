@@ -1,27 +1,35 @@
 package sample.codearea.service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import sample.codearea.dto.PaginationResponseDto;
-import sample.codearea.dto.QuestionPreviewResponseDto;
-import sample.codearea.dto.UserQuestionScrapHistoryResponseDto;
+import sample.codearea.constant.SessionConst;
+import sample.codearea.dto.*;
 import sample.codearea.entity.QuestionEntity;
 import sample.codearea.entity.UserEntity;
 import sample.codearea.repository.QuestionRepository;
 import sample.codearea.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
  * - NOTE: scrap은 질문당 1개만 가능.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final QuestionRepository questionRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserQuestionScrapHistoryResponseDto getUserScrapHistory(Long userId, int currentPage, int pageSize) {
         UserEntity user = userRepository.findById(userId)
@@ -62,4 +70,59 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public ResponseEntity<?> signUp(UserSignupRequestDto userSignupRequestDto) {
+        var data = userSignupRequestDto;
+
+        // password hash encryption
+        String encryptedPassword = bCryptPasswordEncoder.encode(data.getPassword());
+        data.setPassword(encryptedPassword);
+
+        if(getUserByNickname(data.getNickname()).isPresent() || getUserByEmail(data.getEmail()).isPresent()){  // nickname or email is already in DB
+            return ResponseEntity.status(HttpStatus.ALREADY_REPORTED)
+                    .body(null);
+        }else{
+            // save to DB
+            userRepository.save(userSignupRequestDto.toEntity(data));
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(data);
+
+        }
+    }
+
+    public ResponseEntity<?> login(UserLoginRequestDto userLoginRequestDto, HttpServletRequest httpServletRequest) throws IllegalAccessException {
+
+        var data = userLoginRequestDto;
+
+        UserEntity userEntity = getUserByEmail(data.getEmail()).orElseThrow(() -> new IllegalArgumentException("user not found"));
+
+        HttpSession session = httpServletRequest.getSession();
+        Object loginUserEmail = session.getAttribute(SessionConst.LOGIN_USER);
+
+        // session check and compare if login request email and email saved on session are same
+        if(loginUserEmail != null && data.getEmail().equals(userEntity.getEmail())){
+            throw new IllegalAccessException("already login");
+//            return ResponseEntity.status(HttpStatus.IM_USED)
+//                    .body(data);
+        }
+
+        // user info check by email and check password
+        if(userEntity != null && bCryptPasswordEncoder.matches(data.getPassword(), userEntity.getPassword())){
+            session.setAttribute(SessionConst.LOGIN_USER, userEntity.getId());
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(data);
+        }else {
+            log.info("login error");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(data);
+        }
+    }
+
+    public Optional<UserEntity> getUserByNickname(String nickname) {
+        return userRepository.findUserEntityByNickname(nickname);
+    }
+
+    public Optional<UserEntity> getUserByEmail(String email) {
+        return userRepository.findUserEntityByEmail(email);
+    }
 }
