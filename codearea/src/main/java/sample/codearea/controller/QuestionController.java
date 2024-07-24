@@ -104,8 +104,8 @@ public class QuestionController {
 	}
 
 	@GetMapping("/{questionId}")
-	public ResponseEntity<QuestionResponseDto> viewQuestion(@PathVariable Long questionId, @RequestBody voteStatus voteStatus, HttpServletRequest httpServletRequest) {
-		QuestionResponseDto question = questionService.findQuestion(questionId, voteStatus, httpServletRequest);
+	public ResponseEntity<QuestionResponseDto> viewQuestion(@PathVariable Long questionId, HttpServletRequest httpServletRequest) {
+		QuestionResponseDto question = questionService.findQuestion(questionId, httpServletRequest);
 
 		return ResponseEntity.ok(question);
 	}
