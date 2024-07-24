@@ -131,10 +131,9 @@ public class QuestionService {
 
 		if(user == question.getUser()){
 			questionRepository.delete(question);
+			return;
 		}
-		else {
-			throw new IllegalArgumentException("허가되지 않은 사용자입니다.");
-		}
+		throw new IllegalArgumentException("허가되지 않은 사용자입니다.");
 	}
 
 	private static Long getLoginId(HttpServletRequest httpServletRequest) {

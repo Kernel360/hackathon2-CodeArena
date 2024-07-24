@@ -2,6 +2,7 @@ package sample.codearea.controller;
 
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,11 +37,10 @@ public class CommentController {
 	@PostMapping("")
 	public void addComment(
 			@PathVariable Long answerId,
-			@RequestBody CommentRequestDto commentRequestDto
+			@RequestBody CommentRequestDto commentRequestDto,
+			HttpServletRequest httpServletRequest
 	) {
-		Long userId = 1L;
-
-		commentService.save(userId, answerId, commentRequestDto);
+		commentService.save(answerId, commentRequestDto, httpServletRequest);
 	}
 
 	/**
@@ -49,9 +49,10 @@ public class CommentController {
 	@PutMapping("/{commentId}")
 	public void updateComment(
 			@PathVariable Long commentId,
-			@RequestBody CommentRequestDto commentRequestDto
+			@RequestBody CommentRequestDto commentRequestDto,
+			HttpServletRequest httpServletRequest
 	){
-		commentService.update(commentId,commentRequestDto);
+		commentService.update(commentId,commentRequestDto, httpServletRequest);
 	}
 
 	/**
@@ -59,9 +60,10 @@ public class CommentController {
 	 */
 	@DeleteMapping("/{commentId}")
 	public void deleteComment(
-		@PathVariable Long commentId
+		@PathVariable Long commentId,
+		HttpServletRequest httpServletRequest
 	) {
-		commentService.delete(commentId);
+		commentService.delete(commentId, httpServletRequest);
 	}
 
 }
