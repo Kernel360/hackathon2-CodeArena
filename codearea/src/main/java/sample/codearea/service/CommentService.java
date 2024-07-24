@@ -44,11 +44,9 @@ public class CommentService {
     }
 
 
-    public void save(CommentRequestDto commentRequestDto) {
-
-        UserEntity user = userRepository.findById(commentRequestDto.getUserId()).orElseThrow(() -> new IllegalArgumentException("Not found Question"));
-        AnswerEntity answer = answerRepository.findById(commentRequestDto.getAnswerId()).orElseThrow(()-> new IllegalArgumentException("Not found Question"));
-
+    public void save(Long userId, Long answerId, CommentRequestDto commentRequestDto) {
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Not found Question"));
+        AnswerEntity answer = answerRepository.findById(answerId).orElseThrow(()-> new IllegalArgumentException("Not found Question"));
 
         CommentEntity comment = CommentEntity.builder()
                 .user(user)
@@ -68,7 +66,7 @@ public class CommentService {
     }
 
     public void delete(Long commentId) {
-        CommentEntity comment = commentRepository.findById(commentId).orElseThrow();
+        CommentEntity comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("not found comment"));
         commentRepository.delete(comment);
     }
 

@@ -19,7 +19,7 @@ import sample.codearea.dto.CommentResponseDto;
 import sample.codearea.service.CommentService;
 
 @RestController
-@RequestMapping("/comment")
+@RequestMapping("/questions/{questionId}/answers/{answerId}/comments")
 @CrossOrigin(origins = "http://localhost:8080/comment")
 @RequiredArgsConstructor
 public class CommentController {
@@ -28,31 +28,40 @@ public class CommentController {
 
 	@GetMapping("")
 	public List<CommentResponseDto> getCommentList(
-		@RequestParam Long answerId
+			@PathVariable Long answerId
 	){
 		return commentService.findByAnswerId(answerId);
 	}
 
 	@PostMapping("")
 	public void addComment(
-		@RequestBody CommentRequestDto commentRequestDto
+			@PathVariable Long answerId,
+			@RequestBody CommentRequestDto commentRequestDto
 	) {
-		commentService.save(commentRequestDto);
+		Long userId = 1L;
+
+		commentService.save(userId, answerId, commentRequestDto);
 	}
 
-	@DeleteMapping("")
-	public void addComment(
-		@RequestParam Long commentId
-	) {
-		commentService.delete(commentId);
-	}
-
+	/**
+	 * 수정할 때 유저 ID 같은지 확인해야 함.
+	 */
 	@PutMapping("/{commentId}")
 	public void updateComment(
-		@PathVariable Long commentId,
-		@RequestBody CommentRequestDto commentRequestDto
+			@PathVariable Long commentId,
+			@RequestBody CommentRequestDto commentRequestDto
 	){
 		commentService.update(commentId,commentRequestDto);
+	}
+
+	/**
+	 * 삭제할 때 유저 ID 같은지 확인해야 함.
+	 */
+	@DeleteMapping("/{commentId}")
+	public void deleteComment(
+		@PathVariable Long commentId
+	) {
+		commentService.delete(commentId);
 	}
 
 }
