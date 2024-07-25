@@ -34,7 +34,7 @@ public class CommentService {
 
     public List<CommentResponseDto> findByAnswerId(Long answerId) {
         AnswerEntity answerEntity = answerRepository.findById(answerId).orElseThrow(() -> new IllegalArgumentException("not found answer"));
-        return commentRepository.findByAnswer(answerEntity).stream()
+        return commentRepository.findByAnswerOrderByCreatedAtDesc(answerEntity).stream()
             .map(CommentConverter::toDto)
             .collect(Collectors.toList());
     }
