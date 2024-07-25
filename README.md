@@ -91,4 +91,7 @@
 ![와이어2](https://github.com/user-attachments/assets/8d4b156f-743f-4ef3-909d-313880b5bcc3)
 
 
+#### 설정 해야 할 값
+- 🔑 Edit Configurations -> Modify options -> add VM options : -Djasypt.encryptor.password=arena
+
 
