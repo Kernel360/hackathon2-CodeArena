@@ -5,8 +5,7 @@ import { createRequestQuestion } from "@/api/requestQuestion";
 import { useAuth } from "@/context/AuthContext";
 
 export const QuestionDetailAdd = () =>{
-    const [title, setTitle] = useState('');
-  const [userName, setUserName] = useState('');
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const navigate = useNavigate();
   const {user} = useAuth();
@@ -16,7 +15,7 @@ export const QuestionDetailAdd = () =>{
 
     const newQuestion = {
       title,
-      userName,
+      userName:user?.nickname,
       content,
     };
     createRequestQuestion(newQuestion)

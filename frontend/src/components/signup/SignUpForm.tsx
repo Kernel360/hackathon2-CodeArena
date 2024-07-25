@@ -42,7 +42,6 @@ export default function SignUpForm() {
 
     function onSubmit(values: z.infer<typeof formSchemaSignUp>) {
 
-        console.log(values);
 
         // TODO: send to server
         (async () => {
@@ -52,11 +51,7 @@ export default function SignUpForm() {
             
             if (response.ok) {
                 // 로그인 정보를 세션에 저장함.
-                sessionStorage.setItem("user", JSON.stringify({
-                    userId : responseBody.userId, 
-                    email : responseBody.email, 
-                    nickname : responseBody.nickname}));
-                window.location.href = "/";
+                window.location.href = "/sign-in";
             }
         })(/* IIFE */);
         

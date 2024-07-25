@@ -5,6 +5,48 @@ export const requestQuestion = async (questionId: number) =>{
 
   const QuestionResponse = await fetch(requestUrl, {
     method: 'GET',
+    credentials : 'include',
   });
 return  QuestionResponse;
+}
+
+export const createRequestQuestion = async (newQuestion: any) =>{
+  console.log(newQuestion)
+  const response = await fetch(`${API_URL}/questions/add`, {
+    method: 'POST',
+    credentials : 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newQuestion),
+  });
+  return response;
+}
+
+
+
+
+export const updateRequestQuestion = async (newQuestion: any, questionId:number) =>{
+  const response = await fetch(`${API_URL}/questions/${questionId}`, {
+    method: 'PUT',
+    credentials : 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newQuestion),
+  });
+  return response;
+}
+
+
+
+export const deleteRequestQuestion = async (questionId:number) =>{
+  const response = await fetch(`${API_URL}/questions/${questionId}`, {
+    method: 'DELETE',
+    credentials : 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response;
 }

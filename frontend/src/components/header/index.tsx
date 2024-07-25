@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import { useAuth } from '@/context/AuthContext';
+import { requestLogout } from '@/api/requestLogOut';
 
 const LogoLogin: React.FC = () => {
     const { user, logout } = useAuth();
@@ -15,7 +16,9 @@ const LogoLogin: React.FC = () => {
     };
 
     const logoutHandler = () => {
-        logout();
+        requestLogout().then(()=> 
+            logout()
+        )
     };
 
 
