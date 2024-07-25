@@ -29,7 +29,7 @@ public class AnswerController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@PathVariable Long questionId, @Validated @RequestBody AnswerRequestDto answerRequestDto, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<AnswerResponseDto> save(@PathVariable Long questionId, @Validated @RequestBody AnswerRequestDto answerRequestDto, HttpServletRequest httpServletRequest) {
         AnswerResponseDto responseDto = answerService.save(questionId, answerRequestDto, httpServletRequest);
         return ResponseEntity.ok(responseDto);
     }
