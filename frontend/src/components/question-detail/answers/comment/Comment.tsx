@@ -23,7 +23,8 @@ export const Comment = ({answerId} : {answerId : number}) =>{
             }
             requestComment(queryId).then((res) => res.json()).then((data) => setCommentList(data))
         }
-    },[])
+    },[answerId])
+    
     const contentHandler = (e:any) =>{
         setContent(e.target.value)
     }
