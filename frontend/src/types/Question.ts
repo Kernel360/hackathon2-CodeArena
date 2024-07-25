@@ -5,4 +5,6 @@ export interface Question {
   views: number,
   title: string,
   content: string
+  likes: number,
+  hates:number
 }
