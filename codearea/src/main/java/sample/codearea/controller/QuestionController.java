@@ -19,7 +19,7 @@ import sample.codearea.service.QuestionService;
 
 @Controller
 @RequestMapping("/questions")
-@CrossOrigin(origins = "http://localhost:8080/questions")
+@CrossOrigin(origins = "http://localhost:4444/questions")
 @SessionAttributes("user")
 public class QuestionController {
 
