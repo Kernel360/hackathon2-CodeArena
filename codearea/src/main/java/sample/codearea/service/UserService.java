@@ -62,6 +62,8 @@ public class UserService {
     }
 
     public void save(HttpServletRequest httpServletRequest, Long questionId) {
+        // TODO : questionID로 scrap 중복 확인
+
         Long userId = getLoginId(httpServletRequest);
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User Not Found"));
         QuestionEntity question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("Question not found"));
@@ -100,7 +102,6 @@ public class UserService {
         var data = userLoginRequestDto;
 
         UserEntity userEntity = getUserByEmail(data.getEmail()).orElseThrow(() -> new IllegalArgumentException("user not found"));
-        // // TODO: 로그인 성공시 id, email, nickname 리턴하도록 수정
         HttpSession session = httpServletRequest.getSession();
         Object loginUserId = session.getAttribute(SessionConst.LOGIN_USER);
 
@@ -132,13 +133,13 @@ public class UserService {
         }
     }
 
-    public UserMyInfoResponseDto getUserInfo(Long userId, HttpServletRequest httpServletRequest) {
+    public UserMyInfoResponseDto getUserInfo(HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
         Object loginUserId = session.getAttribute(SessionConst.LOGIN_USER);
         UserMyInfoResponseDto userMyInfoResponseDto = new UserMyInfoResponseDto();
 
-        if(loginUserId == userId){
-            UserEntity loginedUserEntity = getUserById(userId).orElseThrow(() -> new IllegalArgumentException("user not found"));
+        if(loginUserId != null){
+            UserEntity loginedUserEntity = getUserById((Long) loginUserId).orElseThrow(() -> new IllegalArgumentException("user not found"));
 
             userMyInfoResponseDto.setEmail(loginedUserEntity.getEmail());
             userMyInfoResponseDto.setNickname(loginedUserEntity.getNickname());
