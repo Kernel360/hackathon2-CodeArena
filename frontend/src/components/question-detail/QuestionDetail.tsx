@@ -7,18 +7,21 @@ import { Button } from "../ui/button";
 import { Answer } from "./answers/Answer";
 import { createRequestAnswer, deleteRequestAnswerItem, requestAnswer } from "@/api/requestAnswer";
 import { AnswerType } from "@/types/AnswerType";
+import { VoteStatus } from "./voted/voteStatus";
 
   
 export const QuestionDetail = () => {
     const {user} = useAuth();
     const location = useLocation();
     const questionId = location.state?.question?.questionId;
+    const hates = location.state?.question?.hates;
+    const likes = location.state?.question?.likes;
     const [question, setQuestion] = useState<Question>();
     const navigate = useNavigate();
     const [answer, setAnswer] = useState<AnswerType[]>([]);
     const [content, setContent] = useState("");
     useEffect(()=>{
-        requestQuestion(questionId).then((res) => res.json()).then((data)=>setQuestion(data))
+        requestQuestion(questionId).then((res) => res.json()).then((data)=> setQuestion({...data, likes,hates}))
     },[])
     useEffect(()=>{
         requestAnswer(questionId).then((res)=> res.json()).then((d)=> setAnswer(d))
@@ -42,7 +45,10 @@ export const QuestionDetail = () => {
     return (
         <div className="container mx-auto mt-10 p-5">
         <div className="bg-white shadow-md rounded-lg p-6">
-            <h1 className="text-3xl font-bold mb-4">{question?.title}</h1>
+            <div className="flex justify-between">
+                <h1 className="text-3xl font-bold mb-4">{question?.title}</h1>
+                <VoteStatus question = {question}/>
+            </div>
             <div className="flex justify-between items-center mb-4">
                 <div className="text-sm text-gray-600">
                     <span className="font-semibold">{question?.userName}</span> - {new Date(question?.createdAt||"").toLocaleDateString()}
