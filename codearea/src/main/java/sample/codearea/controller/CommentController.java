@@ -21,7 +21,7 @@ import sample.codearea.service.CommentService;
 
 @RestController
 @RequestMapping("/questions/{questionId}/answers/{answerId}/comments")
-@CrossOrigin(origins = "http://localhost:8080/comment")
+@CrossOrigin(origins = "http://localhost:4444/comment")
 @RequiredArgsConstructor
 public class CommentController {
 
