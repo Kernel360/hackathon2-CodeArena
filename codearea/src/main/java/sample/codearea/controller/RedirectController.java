@@ -5,9 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-public class RedirectConroller {
-	@GetMapping({"/", "/{path:[^\\.]*}"})
+public class RedirectController {
+	@GetMapping({"/", "/{path:[^\\.]*}", "/{parentPath:[^\\.]*}/{childPath:[^\\.]*}"})
 	public String redirect() {
+		System.out.println("redirect");
 		return "forward:/index.html";
 	}
 }
