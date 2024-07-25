@@ -42,9 +42,7 @@ public class QuestionService {
 				.views(question.getViews())
 				.title(question.getTitle())
 				.content(question.getContent())
-				.voteStatus(voteStatus.VOTE_STATUS_NOT_VOTED)
                 .build();
-
 
 		return questionResponseDto;
 	}
