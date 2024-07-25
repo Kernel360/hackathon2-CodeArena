@@ -55,7 +55,7 @@ export const QuestionDetail = () => {
                 {question?.content}
             </div>
             <div className="flex justify-end">
-                {!user ? "d" :
+                {!user ? "" :
                 <>
                     <Button onClick={(()=>navigate(`/question/edit`,{state:question}))}>수정하기</Button>
                     <Button onClick={deleteHandler}>삭제하기</Button>

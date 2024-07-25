@@ -8,5 +8,5 @@ import sample.codearea.entity.AnswerEntity;
 
 @Repository
 public interface AnswerRepository extends JpaRepository<AnswerEntity, Long> {
-	public List<AnswerEntity> findByQuestionId(Long questionId);
+	public List<AnswerEntity> findByQuestionIdOrderByCreatedAtDesc(Long questionId);
 }

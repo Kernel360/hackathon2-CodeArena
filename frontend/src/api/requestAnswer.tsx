@@ -26,6 +26,19 @@ export const createRequestAnswer = async (newQuestion: any, questionId:string) =
   return response;
 }
 
+export const updateRequestAnswer = async (newQuestion: any, questionId:string, answerId:number) =>{
+  
+  const response = await fetch(`${API_URL}/questions/${questionId}/answers/${answerId}`, {
+    method: 'PUT',
+    credentials : 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newQuestion),
+  });
+  return response;
+}
+
 
 export const deleteRequestAnswerItem = async (questionId:number, answerId:number) =>{
   const response = await fetch(`${API_URL}/questions/${questionId}/answers/${answerId}`, {

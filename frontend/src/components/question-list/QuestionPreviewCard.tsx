@@ -16,7 +16,7 @@ export interface QuestionPreviewData {
     questionId: string;
     title: string;
     nickname: string;
-    createdAt: string;
+    createAt: string;
     likes: number;
     hates: number;
     views: number;
@@ -30,11 +30,11 @@ export default function QuestionPreviewCard( {question}: props ) {
                 <CardHeader>
                     <CardTitle>{question.title}</CardTitle>
                     <CardDescription>
-                        {question.nickname} / created at {question.createdAt}
+                        {question.nickname} | created at {new Date(question.createAt).toLocaleString()}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p>질문 내용 프리뷰...</p>
+                    <p>조회수 : {question.views}</p>
                 </CardContent>
             </Card>
         </div>

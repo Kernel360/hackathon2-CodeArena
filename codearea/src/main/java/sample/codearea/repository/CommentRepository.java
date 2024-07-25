@@ -9,5 +9,5 @@ import sample.codearea.entity.CommentEntity;
 
 public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
 
-	List<CommentEntity> findByAnswer(AnswerEntity answer);
+	List<CommentEntity> findByAnswerOrderByCreatedAtDesc(AnswerEntity answer);
 }

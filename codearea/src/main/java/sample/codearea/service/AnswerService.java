@@ -38,7 +38,7 @@ public class AnswerService {
         return answerRepository.findById(answerId);
     }
     public List<AnswerResponseDto> findAll(Long questionId) {
-        List<AnswerEntity> byQuestionId = answerRepository.findByQuestionId(questionId);
+        List<AnswerEntity> byQuestionId = answerRepository.findByQuestionIdOrderByCreatedAtDesc(questionId);
 
         List<AnswerResponseDto> answerResponseDtoList = new ArrayList<>();
         for (AnswerEntity answerEntity : byQuestionId) {

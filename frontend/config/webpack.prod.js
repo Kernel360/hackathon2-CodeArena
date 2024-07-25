@@ -12,7 +12,7 @@ module.exports = merge(common, {
   output: {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "../../codearea/src/main/resources/static"),
-    publicPath: "./",
+    publicPath: "http://localhost:8080/",
     clean: true,
   },
   module: {
