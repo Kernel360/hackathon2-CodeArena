@@ -13,9 +13,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity exception() {
-        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
-    }
+//    @ExceptionHandler({Exception.class})
+//    public ResponseEntity exception() {
+//        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
+//    }
 
 }

@@ -28,6 +28,7 @@ public class VoteService {
         Long loginId = getLoginId(httpServletRequest);
         if(loginId == null) {
             log.info("log : {} ", voteRepository.findByUserQuestionCK_QuestionId(questionId));
+            return null;
         }
         UserQuestionCK questionCK = new UserQuestionCK(loginId, questionId);
         Optional<VoteEntity> optionalVote = voteRepository.findById(questionCK);

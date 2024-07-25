@@ -40,6 +40,8 @@ public class QuestionService {
 				.userName(question.getUser().getNickname())
 				.createdAt(question.getCreatedAt())
 				.views(question.getViews())
+				.likes(question.getLikes())
+				.hates(question.getHates())
 				.title(question.getTitle())
 				.content(question.getContent())
                 .build();

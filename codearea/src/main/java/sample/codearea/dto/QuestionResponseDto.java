@@ -17,6 +17,8 @@ public class QuestionResponseDto {
     private String userName;
     private LocalDateTime createdAt;
     private Integer views;
+    private Integer likes;
+    private Integer hates;
     private String title;
     private String content;
 
