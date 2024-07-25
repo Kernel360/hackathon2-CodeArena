@@ -19,6 +19,8 @@ public class VoteController {
 
     private final VoteService voteService;
 
+//    like, unlike, 자기상태, 수정, 삭제
+
     @GetMapping("/vote")
     public ResponseEntity<VoteEntity> getVote(@PathVariable Long questionId, HttpServletRequest httpServletRequest) {
         VoteEntity vote = voteService.getVote(questionId, httpServletRequest);
