@@ -92,6 +92,8 @@
 
 
 #### 설정 해야 할 값
-- 🔑 Edit Configurations -> Modify options -> add VM options : -Djasypt.encryptor.password=arena
+- 🔑 Edit Configurations -> Modify options -> add VM options 
+###
+    -Djasypt.encryptor.password=arena
 
 
