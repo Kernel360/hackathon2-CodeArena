@@ -19,7 +19,5 @@ public class QuestionResponseDto {
     private Integer views;
     private String title;
     private String content;
-    private voteStatus voteStatus;
-
 
 }
