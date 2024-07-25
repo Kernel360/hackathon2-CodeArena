@@ -40,7 +40,6 @@ public class CommentService {
     }
 
     public List<CommentResponseDto> findAll() {
-
         return commentRepository.findAll().stream()
             .map(CommentConverter::toDto)
             .collect(Collectors.toList());
