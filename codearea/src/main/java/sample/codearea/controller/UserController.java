@@ -49,7 +49,6 @@ public class UserController {
 		return ;
 	}
 
-	// TODO: 투표, 스크랩 처리 완료 되면 정보 추가 필요
 	@GetMapping("/my-page")
 	public ResponseEntity<UserMyInfoResponseDto> myPage(HttpServletRequest httpServletRequest) {
 

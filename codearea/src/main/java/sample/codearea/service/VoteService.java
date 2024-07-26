@@ -20,10 +20,7 @@ public class VoteService {
 
     private final VoteRepository voteRepository;
 
-    /**
-     * 로그인 시 -> 지금 로직 그대로
-     * 로그인 안했을 시 -> loginId == null,
-     */
+    // TODO: 세션에서 로그인한 유저id를 가져왔을 때 로그인한 유저 체크하는 로직이 이 방식이 맞을까요?
     public VoteEntity getVote(Long questionId, HttpServletRequest httpServletRequest) {
         Long loginId = getLoginId(httpServletRequest);
         if(loginId == null) {

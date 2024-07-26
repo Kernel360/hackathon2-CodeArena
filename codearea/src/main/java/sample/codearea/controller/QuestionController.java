@@ -36,6 +36,7 @@ public class QuestionController {
 	//          ex) /question?nickname=김영한
 	//       2. 만약 검색 조건이 2개 이상 들어오면, 예외를 발생
 
+	//TODO : 페이지네이션 관련 로직을 서비스로 빼야하는 것은 알고 있지만, 서비스로 비즈니스 로직을 분리할 지 모르겠습니다.
 	@PostMapping("")
 	public ResponseEntity<PaginatedQuestionPreviewListResponseDto> getQuestions(
 		@RequestParam(value = "category") Optional<String> searchCategory,
