@@ -21,12 +21,14 @@ public class VoteController {
 
 //    like, unlike, 자기상태, 수정, 삭제
 
+    // TODO : GET 메서드로 요청할 때, Query Parameter, Path Variable로 보낼지에 대해 고민입니다.
     @GetMapping("/vote")
     public ResponseEntity<VoteEntity> getVote(@PathVariable Long questionId, HttpServletRequest httpServletRequest) {
         VoteEntity vote = voteService.getVote(questionId, httpServletRequest);
         return ResponseEntity.ok(vote);
     }
 
+    //
     @PutMapping("/vote")
     public ResponseEntity updateVote(@PathVariable Long questionId, @RequestParam voteStatus voteStatus, HttpServletRequest httpServletRequest) {
         voteService.updateVote(questionId, voteStatus, httpServletRequest);

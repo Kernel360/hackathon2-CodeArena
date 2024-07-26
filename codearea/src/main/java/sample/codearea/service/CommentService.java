@@ -46,7 +46,7 @@ public class CommentService {
     }
 
 
-    public void save(Long answerId, CommentRequestDto commentRequestDto, HttpServletRequest httpServletRequest) {
+    public void save( Long answerId, CommentRequestDto commentRequestDto, HttpServletRequest httpServletRequest) {
         Long loginId = getLoginId(httpServletRequest);
         UserEntity user = userRepository.findById(loginId).orElseThrow(() -> new IllegalArgumentException("Not found Question"));
         AnswerEntity answer = answerRepository.findById(answerId).orElseThrow(()-> new IllegalArgumentException("Not found Question"));

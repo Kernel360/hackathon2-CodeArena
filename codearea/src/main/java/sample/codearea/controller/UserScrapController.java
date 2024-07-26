@@ -64,9 +64,5 @@ public class UserScrapController {
 
 		return ResponseEntity.ok().build();
 	}
-/*
-	private Long getUserIdFromSession(HttpServletRequest httpServletRequest) {
-		// TODO: 세션에서 사용자 ID를 가져오는 로직을 구현해야 함
-		return 1L; // 예시로 임시 ID 반환
-	}*/
+
 }

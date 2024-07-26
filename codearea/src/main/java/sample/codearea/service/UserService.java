@@ -43,7 +43,6 @@ public class UserService {
 
         List<QuestionEntity> pagedScraps = user.getQuestionScraps().subList(start, end);
 
-        //TODO: QuestionPreviewResponseDto에 voteStatus 포함되어야 하는지 확인 필요
         List<QuestionPreviewResponseDto> questionPreviews = pagedScraps.stream()
                 .map(QuestionPreviewResponseDtoMapper::toDto)
                 .collect(Collectors.toList());
@@ -62,8 +61,6 @@ public class UserService {
     }
 
     public void save(HttpServletRequest httpServletRequest, Long questionId) {
-        // TODO : questionID로 scrap 중복 확인
-
         Long userId = getLoginId(httpServletRequest);
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User Not Found"));
         QuestionEntity question = questionRepository.findById(questionId).orElseThrow(() -> new IllegalArgumentException("Question not found"));
